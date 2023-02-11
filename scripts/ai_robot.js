@@ -37,11 +37,22 @@ function nextAction(playerID, gameState){
             curLowPlan.push("interact");
             curHighPlan.shift();
         }
-    }
-    
     const next_action = curLowPlan.shift();
-
     executeAction(playerID, gameState, next_action);
+    }
+
+    if(curHighPlan.length == 0){
+        curHighPlan = high_level_action(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
+        
+        if(curHighPlan.length!=0){
+            //if found keep moving
+            curHighPlan.push("interact");
+            curLowPlan.shift();
+        }
+    const next_action = curHighPlan.shift();
+    executeAction(playerID, gameState, next_action);
+    }
+     
 }
 
 
@@ -138,7 +149,8 @@ function checkGoalLocation(player, tar_loc){
     return(false);
 }
 
-const actions_list = [control.up, control.down, control.left, control.right, control.wait];
+const low_level_actions_list = [control.up, control.down, control.left, control.right, control.wait]; // pickup and dropoff object/obstacle?
+const high_level_actions_list = [deliver_object, remove_obstacle, wait];
 
 function bfs_action_simp(agentID, gameState, tar_loc){
     console.log("start");
@@ -168,7 +180,7 @@ function bfs_action_simp(agentID, gameState, tar_loc){
             return(q[ind-1].hist);
         }
         
-        for(const a of actions_list){
+        for(const a of low_level_actions_list){
             //Generate new state if possible
             
             let newSearchNode = nextState(curSearchNode, a, agentID, gameState)
@@ -184,3 +196,66 @@ function bfs_action_simp(agentID, gameState, tar_loc){
 }
 
 
+function high_level_action(agentID, gameState, tar_loc){
+    // let robot_level = robot1.level;
+    let robot_level = robotLevel;
+    let predicted_human_action = null; // assume initially level 0
+    
+    predicted_human_action = level_recursion(predicted_human_action, robot_level);
+    robot_action = get_robot_action_bfs(agentID, gameState, tar_loc, predicted_human_action);
+
+    return robot_action;
+}
+
+function get_robot_action_bfs(agentID, gameState, tar_loc, predicted_human_action){
+
+}
+
+function level_recursion(predicted_human_action, level){
+    if(level == 0){
+        return predicted_human_action; // egocentric
+    }
+    return level_recursion(predict_human_action_by_EP(level), level-1);
+}
+
+function predict_human_action_by_EP(level){
+    if(human1.action==null){
+        return high_level_actions_list[Math.floor(Math.random() * high_level_actions_list.length)];
+    }
+    else{ // to do: use key-value map or dict of possible action, ep (for each human's current action
+        if (level == 1){
+            if(human1.action == actions.holding){
+                return high_level_actions_list[0];
+            }
+            else if(human1.action == actions.notHolding){
+                return high_level_actions_list[2];
+            }
+            else if(human1.action == actions.lifting){
+                return high_level_actions_list[0];
+            }
+            else if(human1.action == actions.interact){
+                return high_level_actions_list[0];
+            }
+            else if(human1.action == actions.wait){
+                return high_level_actions_list[2];
+            }
+        }
+        else if (level == 2){ // dep more on interact on object or obstacle
+            if(human1.action == actions.holding){
+                return high_level_actions_list[0];
+            }
+            else if(human1.action == actions.notHolding){
+                return high_level_actions_list[2];
+            }
+            else if(human1.action == actions.lifting){  
+                return high_level_actions_list[0];
+            }
+            else if(human1.action == actions.interact){
+                return high_level_actions_list[0];
+            }
+            else if(human1.action == actions.wait){
+                return high_level_actions_list[2];
+            }
+        }
+    }
+}
