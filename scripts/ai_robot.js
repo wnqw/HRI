@@ -198,25 +198,71 @@ function bfs_action_simp(agentID, gameState, tar_loc){
 
 function high_level_action(agentID, gameState, tar_loc){
     // let robot_level = robot1.level;
-    let robot_level = robotLevel;
-    let predicted_human_action = null; // assume initially level 0
-    
-    predicted_human_action = level_recursion(predicted_human_action, robot_level);
-    robot_action = get_robot_action_bfs(agentID, gameState, tar_loc, predicted_human_action);
-
+    let robot_level = robotLevel; 
+    robot_action = level_recursion(agentID.robot.action, robot_level, agentID, gameState, tar_loc);
     return robot_action;
 }
 
-function get_robot_action_bfs(agentID, gameState, tar_loc, predicted_human_action){
 
-}
-
-function level_recursion(predicted_human_action, level){
+function level_recursion(predicted_robot_action, level, agentID, gameState, tar_loc){
+    predicted_robot_action = bfs_action_highlevels(level, agentID, gameState, tar_loc);
     if(level == 0){
-        return predicted_human_action; // egocentric
+        return predicted_robot_action; 
     }
-    return level_recursion(predict_human_action_by_EP(level), level-1);
+    return level_recursion(predicted_robot_action, level-1, agentID, gameState, tar_loc);
 }
+
+
+function bfs_action_highlevels(level, agentID, gameState, tar_loc){
+    predicted_robot_action = null;
+
+    if (level==0){
+        predicted_robot_action = bfs_action_level0(level, agentID, gameState, tar_loc, [], 0);
+    }
+    else if (level==1){
+        predicted_robot_action = bfs_action_level1(level, agentID, gameState, tar_loc, [], 0, playerID.human.action);
+    }
+    else if (level==2){
+        predicted_robot_action = bfs_action_level2(level, agentID, gameState, tar_loc, playerID.human.action);
+    }
+
+    return predicted_robot_action;
+}
+
+
+function bfs_action_level0(level, agentID, gameState, tar_loc, prev_actions, prev_reward){
+    const agents = []; 
+    for(const a of gameState.agents){
+       //The key elements are just id, location, and direction (not holding yet)
+       agents.push([ a.id, a.loc, a.direction]);
+    }
+    const player_ind = findIndfromID(agents, agentID);
+
+    const searchNode = {
+        agents: agents,
+        hist: []
+    };
+
+    let q = [];
+
+    q.push(searchNode);
+    let ind = 0;
+    while(ind < q.length){
+        let curSearchNode = q[ind++];
+
+        
+    }
+    return ([]);
+}
+
+function bfs_action_level1(level, agentID, gameState, tar_loc, prev_actions, prev_reward, opponent_action_level0){
+}
+
+function bfs_action__level2(level, agentID, gameState, tar_loc, opponent_action_level1){
+}
+
+
+
 
 function predict_human_action_by_EP(level){
     if(human1.action==null){

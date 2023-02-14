@@ -1,0 +1,52 @@
+level0(agent, actions, searth_depth, cur_state, max_depth, cur_path) {
+	if (cur_state== goal_state){
+		return first_action}
+
+	if( search_depth > max_depth) {return false}
+
+	for all possible actions{
+        next_state = apply action to cur_state
+		level0(agent, actions, searth_depth, next_state, max_depth, cur_path)
+    }
+		 
+		
+
+    return final_return 
+}
+
+
+level1 (agent, actions, searth_depth, cur_state, max_depth, cur_path) {
+    if (cur_state== goal_state){
+        return first_action}
+
+    if( search_depth > max_depth) {return false}
+
+    for all possible actions{
+        next_state = apply action to cur_state
+        others_action = level0 (other_agent, actions, searth_depth, next_state, max_depth, cur_path)
+        next_state = apply others_action to next_state
+        level1  (agent, actions, searth_depth+1, next_state, max_depth, cur_path)
+        }
+
+    return final_return
+} 
+
+
+level2 (agent, actions, searth_depth, cur_state, max_depth, cur_path) {
+    if (cur_state== goal_state){
+        return first_action}
+
+    if( search_depth > max_depth) {return false}
+
+    for all possible actions{
+        next_state = apply action to cur_state
+        others_action = level1 (other_agent, actions, searth_depth, next_state, max_depth, cur_path)
+        next_state = apply others_action to next_state
+        level2  (agent, actions, searth_depth+1, next_state, max_depth, cur_path)
+        }
+
+
+    return final_return
+}   
+
+# interative deepening
