@@ -6,10 +6,8 @@ level0(agent, actions, searth_depth, cur_state, max_depth, cur_path) {
 
 	for all possible actions{
         next_state = apply action to cur_state
-		level0(agent, actions, searth_depth, next_state, max_depth, cur_path)
+		return level0(agent, actions, searth_depth, next_state, max_depth, cur_path)
     }
-		 
-		
 
     return final_return 
 }
@@ -25,7 +23,7 @@ level1 (agent, actions, searth_depth, cur_state, max_depth, cur_path) {
         next_state = apply action to cur_state
         others_action = level0 (other_agent, actions, searth_depth, next_state, max_depth, cur_path)
         next_state = apply others_action to next_state
-        level1  (agent, actions, searth_depth+1, next_state, max_depth, cur_path)
+        level1  (agent, actions, searth_depth + 1, next_state, max_depth, cur_path)
         }
 
     return final_return

@@ -52,6 +52,9 @@ class Player{
     hold_object; 
     level;    // optional: level of recursive
 
+    // high level action
+    high_level_action;
+
     constructor(id, type, color, str, dex, rewards, direction = directions.up, 
                 speed = 1, action = actions.notHolding, hold_object=null, level=0){
         this.id = id;

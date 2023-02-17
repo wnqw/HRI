@@ -134,7 +134,7 @@ const keyToInd = {
     id: 0,
     loc: 1,
     dir: 2,
-    holding: 3 // not used yet
+    holding: 3 
 }
 
 function checkGoalLocation(player, tar_loc){
@@ -150,7 +150,6 @@ function checkGoalLocation(player, tar_loc){
 }
 
 const low_level_actions_list = [control.up, control.down, control.left, control.right, control.wait]; // pickup and dropoff object/obstacle?
-const high_level_actions_list = [deliver_object, remove_obstacle, wait];
 
 function bfs_action_simp(agentID, gameState, tar_loc){
     console.log("start");
@@ -196,12 +195,97 @@ function bfs_action_simp(agentID, gameState, tar_loc){
 }
 
 
+// high level actions
+
+const high_level_actions_list = [deliver_object, remove_obstacle, wait];
+
 function high_level_action(agentID, gameState, tar_loc){
-    // let robot_level = robot1.level;
-    let robot_level = robotLevel; 
-    robot_action = level_recursion(agentID.robot.action, robot_level, agentID, gameState, tar_loc);
+    let robot_level = robotLevel; // 0.5?
+    let dfs_max_depth = 2;
+    let robot_action_path = [];
+
+    if (robot_level == 0){
+        robot_action_path = dfs_level_0(agentID, gameState, tar_loc, 0, dfs_max_depth);
+    }
+    if (robot_level == 1){
+        robot_action_path = dfs_level_1(agentID, gameState, tar_loc, 0, dfs_max_depth);
+    }
+    if (robot_level == 2){
+        robot_action_path = dfs_level_2(agentID, gameState, tar_loc, 0, dfs_max_depth);
+    }
+
+    if(robot_action_path == false){
+        console.log("Not Found");
+        return false;
+    }
+    
+    let robot_action = robot_action_path[0];
     return robot_action;
 }
+
+
+function dfs_level_0(agentID, gameState, tar_loc, cur_depth, max_depth){
+    let robot_action_path = [];
+
+    // init agents
+    const agents = []; 
+    for(const a of gameState.agents){
+       agents.push([a.id, a.loc, a.direction, a.high_level_action]);
+    }
+    const player_index = findIndfromID(agents, agentID);
+
+    // processed nodes
+    let processed_nodes = [];
+    // cur state node
+    let cur_state_node = {
+        agents: agents,
+        action_path: [],
+    };
+
+    robot_action_path = dfs_level_0_visit(agentID, gameState, tar_loc, cur_depth, max_depth, cur_state_node, player_index, processed_nodes);
+    return robot_action_path;
+}
+
+function dfs_level_0_visit(agentID, gameState, tar_loc, cur_depth, max_depth, cur_node, player_index, processed_nodes){
+    processed_nodes.push(cur_node); // processed
+
+    if(checkGoalLocation(cur_node.agents[player_index], tar_loc)){
+        console.log("found");
+        return cur_node.action_path;
+    }
+
+    if (cur_depth > max_depth){
+        return false;
+    }
+
+    for(const action of high_level_actions_list){ // for v in adjList[u]?
+        let next_node = nextState_highlevel(cur_node, action, agentID, gameState);
+        if(checkDupedSimpState(processed_nodes, cur_node) == false){ // not processed
+            return dfs_level_0_visit(agentID, gameState, tar_loc, cur_depth + 1, max_depth, next_node, player_index, processed_nodes);
+        }
+    }
+}
+
+
+
+
+function dfs_level_1(agentID, gameState, tar_loc, cur_depth, max_depth){
+
+}
+
+function dfs_level_2(agentID, gameState, tar_loc, cur_depth, max_depth){
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 function level_recursion(predicted_robot_action, level, agentID, gameState, tar_loc){
@@ -213,95 +297,41 @@ function level_recursion(predicted_robot_action, level, agentID, gameState, tar_
 }
 
 
-function bfs_action_highlevels(level, agentID, gameState, tar_loc){
-    predicted_robot_action = null;
 
-    if (level==0){
-        predicted_robot_action = bfs_action_level0(level, agentID, gameState, tar_loc, [], 0);
+
+
+
+function nextState_highlevel(cur_node, action, target_id, gameState){
+    const next_node = structuredClone(cur_node); //Is there a better way to deep clone this?
+
+    const index = findIndfromID(next_node.agents, target_id); 
+    const player = next_node.agents[index]; 
+    
+    if(action === player[keyToInd_high.high_level_action]){
+        player[keyToInd_high.loc] = get_new_loc_for_highlevel(action, player, gameState);
     }
-    else if (level==1){
-        predicted_robot_action = bfs_action_level1(level, agentID, gameState, tar_loc, [], 0, playerID.human.action);
-    }
-    else if (level==2){
-        predicted_robot_action = bfs_action_level2(level, agentID, gameState, tar_loc, playerID.human.action);
+    else{
+        //if action != current high_level_action
+        player[keyToInd_high.high_level_action] = action;
     }
 
-    return predicted_robot_action;
+    next_node.action_path.push(action);
+    return(next_node);
 }
 
 
-function bfs_action_level0(level, agentID, gameState, tar_loc, prev_actions, prev_reward){
-    const agents = []; 
-    for(const a of gameState.agents){
-       //The key elements are just id, location, and direction (not holding yet)
-       agents.push([ a.id, a.loc, a.direction]);
-    }
-    const player_ind = findIndfromID(agents, agentID);
-
-    const searchNode = {
-        agents: agents,
-        hist: []
-    };
-
-    let q = [];
-
-    q.push(searchNode);
-    let ind = 0;
-    while(ind < q.length){
-        let curSearchNode = q[ind++];
-
-        
-    }
-    return ([]);
-}
-
-function bfs_action_level1(level, agentID, gameState, tar_loc, prev_actions, prev_reward, opponent_action_level0){
-}
-
-function bfs_action__level2(level, agentID, gameState, tar_loc, opponent_action_level1){
+function get_new_loc_for_highlevel(highlevel_action, player, gameState){
+    // TODO: get resulting new loc from low level action
+    // based on high level actions, such as deliver, removeObstacle, wait
+    let new_loc;
+    return new_loc;
 }
 
 
-
-
-function predict_human_action_by_EP(level){
-    if(human1.action==null){
-        return high_level_actions_list[Math.floor(Math.random() * high_level_actions_list.length)];
-    }
-    else{ // to do: use key-value map or dict of possible action, ep (for each human's current action
-        if (level == 1){
-            if(human1.action == actions.holding){
-                return high_level_actions_list[0];
-            }
-            else if(human1.action == actions.notHolding){
-                return high_level_actions_list[2];
-            }
-            else if(human1.action == actions.lifting){
-                return high_level_actions_list[0];
-            }
-            else if(human1.action == actions.interact){
-                return high_level_actions_list[0];
-            }
-            else if(human1.action == actions.wait){
-                return high_level_actions_list[2];
-            }
-        }
-        else if (level == 2){ // dep more on interact on object or obstacle
-            if(human1.action == actions.holding){
-                return high_level_actions_list[0];
-            }
-            else if(human1.action == actions.notHolding){
-                return high_level_actions_list[2];
-            }
-            else if(human1.action == actions.lifting){  
-                return high_level_actions_list[0];
-            }
-            else if(human1.action == actions.interact){
-                return high_level_actions_list[0];
-            }
-            else if(human1.action == actions.wait){
-                return high_level_actions_list[2];
-            }
-        }
-    }
+const keyToInd_high = {
+    id: 0,
+    loc: 1,
+    dir: 2,
+    high_level_action: 3,
+    // holding: 4
 }
