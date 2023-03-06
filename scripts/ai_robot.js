@@ -209,7 +209,7 @@ function bfs_level0(agentID, gameState, tar_loc){
 const high_level_actions_list = [deliver_object, remove_obstacle, wait];
 
 function high_level_action(agentID, gameState, tar_loc){
-    let robot_level = robotLevel; // 0.5?
+    let robot_level = robotLevel; 
     let dfs_max_depth = 2;
     let robot_action_path = [];
 
@@ -314,7 +314,7 @@ function dfs_level_1_visit(agentID, gameState, tar_loc, cur_depth, max_depth, cu
 
     for(const action of high_level_actions_list){ // for v in adjList[u]?
         let next_node = nextState_highlevel(cur_node, action, agentID, gameState);
-        let opponent_action_path = dfs_level_0_visit(agentID, gameState, tar_loc, cur_depth, max_depth, next_node, player_index, processed_nodes)
+        let opponent_action_path = dfs_level_0_visit(agentID, gameState, tar_loc, cur_depth, max_depth, next_node, player_index, processed_nodes);
         let next_node2 = nextState_highlevel(cur_node, opponent_action_path[0], agentID, gameState);
         if(checkDupedSimpState(processed_nodes, cur_node) == false){ // not processed
             return dfs_level_1_visit(agentID, gameState, tar_loc, cur_depth + 1, max_depth, next_node2, player_index, processed_nodes);

@@ -5,7 +5,7 @@ const dirToMovement = {
     right: [0, 1]
 }
 
-let robotLevel = 0;
+let robotLevel = 1;
 // low-level movement
 let curHighPlan = [];
 let curLowPlan = [];
@@ -30,8 +30,17 @@ function nextAction(playerID, gameState){
     if(curHighPlan.length===0 && curLowPlan.length ===0) return;
 
     if(curLowPlan.length == 0){
-        curLowPlan = bfs_level0(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
-        
+        curLowPlan = bfs_level1(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
+
+        // if (robotLevel == 0) {
+        //     curLowPlan = bfs_level0(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
+        // }
+        // if (robotLevel == 1) {
+        //     curLowPlan = bfs_level1(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
+        // }
+        // if (robotLevel == 2) {
+        //     curLowPlan = bfs_level2(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
+        // }
         if(curLowPlan.length != 0){
             //if found keep moving
             curLowPlan.push("interact");
@@ -184,3 +193,89 @@ function bfs_level0(agentID, gameState, tar_loc){
 }
 
 
+
+
+function bfs_level1(agentID, gameState, tar_loc){
+    console.log("start");
+
+    let q = [];    
+   
+    //Manually construct the initial simplified player list
+    const agents = []; 
+    for(const a of gameState.agents){
+       //The key elements are just id, location, and direction (not holding yet)
+       agents.push([ a.id, a.loc, a.direction]);
+    }
+    const player_ind = findIndfromID(agents, agentID);
+
+    const searchNode = {
+        agents: agents,
+        hist: []
+    };
+
+    q.push(searchNode); 
+    let ind = 0;
+    while(ind < q.length){
+        let curSearchNode = q[ind++];
+
+        if(checkGoalLocation(curSearchNode.agents[player_ind], tar_loc) ){
+            console.log("found");
+            return(q[ind-1].hist);
+        }
+        
+        for(const a of actions_list){
+            let level0_actions = bfs_level0(agentID, gameState, tar_loc);
+            let newSearchNode = nextState(curSearchNode, level0_actions[0], agentID, gameState);
+
+            if(checkDupedSimpState(q, newSearchNode) === false){
+                q.push(newSearchNode);
+            }
+        }
+    }    
+
+    console.log("Not Found");
+    return([]);
+}
+
+
+function bfs_level2(agentID, gameState, tar_loc){
+    console.log("start");
+
+    let q = [];    
+   
+    //Manually construct the initial simplified player list
+    const agents = []; 
+    for(const a of gameState.agents){
+       //The key elements are just id, location, and direction (not holding yet)
+       agents.push([ a.id, a.loc, a.direction]);
+    }
+    const player_ind = findIndfromID(agents, agentID);
+
+    const searchNode = {
+        agents: agents,
+        hist: []
+    };
+
+    q.push(searchNode); 
+    let ind = 0;
+    while(ind < q.length){
+        let curSearchNode = q[ind++];
+
+        if(checkGoalLocation(curSearchNode.agents[player_ind], tar_loc) ){
+            console.log("found");
+            return(q[ind-1].hist);
+        }
+        
+        for(const a of actions_list){
+            let level1_actions = bfs_level1(agentID, gameState, tar_loc);
+            let newSearchNode = nextState(curSearchNode, level1_actions[0], agentID, gameState);
+
+            if(checkDupedSimpState(q, newSearchNode) === false){
+                q.push(newSearchNode);
+            }
+        }
+    }    
+
+    console.log("Not Found");
+    return([]);
+}
