@@ -30,6 +30,7 @@ function nextAction(playerID, gameState){
     if(curHighPlan.length===0 && curLowPlan.length ===0) return;
 
     if(curLowPlan.length == 0){
+        // console.log(robotLevel);
         curLowPlan = bfs_level1(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
 
         // if (robotLevel == 0) {
