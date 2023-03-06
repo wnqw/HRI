@@ -26,32 +26,41 @@ function setHighPlan(playerID, gameState){
 
 
 function nextAction(playerID, gameState){
-
     if(curHighPlan.length===0 && curLowPlan.length ===0) return;
 
-    if(curLowPlan.length == 0){
-        curLowPlan = bfs_action_simp(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
+    curLowPlan = bfs_level0(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
         
-        if(curLowPlan.length!=0){
-            //if found keep moving
-            curLowPlan.push("interact");
-            curHighPlan.shift();
-        }
+    if(curLowPlan.length!=0){
+        //if found keep moving
+        curLowPlan.push("interact");
+        curHighPlan.shift();
+    }
     const next_action = curLowPlan.shift();
     executeAction(playerID, gameState, next_action);
-    }
 
-    if(curHighPlan.length == 0){
-        curHighPlan = high_level_action(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
+    // if(curLowPlan.length == 0){
+    //     curLowPlan = bfs_action_simp(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
         
-        if(curHighPlan.length!=0){
-            //if found keep moving
-            curHighPlan.push("interact");
-            curLowPlan.shift();
-        }
-    const next_action = curHighPlan.shift();
-    executeAction(playerID, gameState, next_action);
-    }
+    //     if(curLowPlan.length!=0){
+    //         //if found keep moving
+    //         curLowPlan.push("interact");
+    //         curHighPlan.shift();
+    //     }
+    // const next_action = curLowPlan.shift();
+    // executeAction(playerID, gameState, next_action);
+    // }
+
+    // if(curHighPlan.length == 0){
+    //     curHighPlan = high_level_action(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
+        
+    //     if(curHighPlan.length!=0){
+    //         //if found keep moving
+    //         curHighPlan.push("interact");
+    //         curLowPlan.shift();
+    //     }
+    // const next_action = curHighPlan.shift();
+    // executeAction(playerID, gameState, next_action);
+    // }
      
 }
 
@@ -151,7 +160,7 @@ function checkGoalLocation(player, tar_loc){
 
 const low_level_actions_list = [control.up, control.down, control.left, control.right, control.wait]; // pickup and dropoff object/obstacle?
 
-function bfs_action_simp(agentID, gameState, tar_loc){
+function bfs_level0(agentID, gameState, tar_loc){
     console.log("start");
 
     let q = [];    
@@ -268,36 +277,98 @@ function dfs_level_0_visit(agentID, gameState, tar_loc, cur_depth, max_depth, cu
 
 
 
-
 function dfs_level_1(agentID, gameState, tar_loc, cur_depth, max_depth){
+    let robot_action_path = [];
 
+    // init agents
+    const agents = []; 
+    for(const a of gameState.agents){
+       agents.push([a.id, a.loc, a.direction, a.high_level_action]);
+    }
+    const player_index = findIndfromID(agents, agentID);
+
+    // processed nodes
+    let processed_nodes = [];
+    // cur state node
+    let cur_state_node = {
+        agents: agents,
+        action_path: [],
+    };
+
+    robot_action_path = dfs_level_1_visit(agentID, gameState, tar_loc, cur_depth, max_depth, cur_state_node, player_index, processed_nodes);
+    return robot_action_path;
 }
+
+
+function dfs_level_1_visit(agentID, gameState, tar_loc, cur_depth, max_depth, cur_node, player_index, processed_nodes){
+    processed_nodes.push(cur_node); // processed
+
+    if(checkGoalLocation(cur_node.agents[player_index], tar_loc)){
+        console.log("found");
+        return cur_node.action_path;
+    }
+
+    if (cur_depth > max_depth){
+        return false;
+    }
+
+    for(const action of high_level_actions_list){ // for v in adjList[u]?
+        let next_node = nextState_highlevel(cur_node, action, agentID, gameState);
+        let opponent_action_path = dfs_level_0_visit(agentID, gameState, tar_loc, cur_depth, max_depth, next_node, player_index, processed_nodes)
+        let next_node2 = nextState_highlevel(cur_node, opponent_action_path[0], agentID, gameState);
+        if(checkDupedSimpState(processed_nodes, cur_node) == false){ // not processed
+            return dfs_level_1_visit(agentID, gameState, tar_loc, cur_depth + 1, max_depth, next_node2, player_index, processed_nodes);
+        }
+    }
+}
+
+
+
 
 function dfs_level_2(agentID, gameState, tar_loc, cur_depth, max_depth){
+    let robot_action_path = [];
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-function level_recursion(predicted_robot_action, level, agentID, gameState, tar_loc){
-    predicted_robot_action = bfs_action_highlevels(level, agentID, gameState, tar_loc);
-    if(level == 0){
-        return predicted_robot_action; 
+    // init agents
+    const agents = []; 
+    for(const a of gameState.agents){
+       agents.push([a.id, a.loc, a.direction, a.high_level_action]);
     }
-    return level_recursion(predicted_robot_action, level-1, agentID, gameState, tar_loc);
+    const player_index = findIndfromID(agents, agentID);
+
+    // processed nodes
+    let processed_nodes = [];
+    // cur state node
+    let cur_state_node = {
+        agents: agents,
+        action_path: [],
+    };
+
+    robot_action_path = dfs_level_2_visit(agentID, gameState, tar_loc, cur_depth, max_depth, cur_state_node, player_index, processed_nodes);
+    return robot_action_path;
 }
 
 
+function dfs_level_2_visit(agentID, gameState, tar_loc, cur_depth, max_depth, cur_node, player_index, processed_nodes){
+    processed_nodes.push(cur_node); // processed
 
+    if(checkGoalLocation(cur_node.agents[player_index], tar_loc)){
+        console.log("found");
+        return cur_node.action_path;
+    }
+
+    if (cur_depth > max_depth){
+        return false;
+    }
+
+    for(const action of high_level_actions_list){ // for v in adjList[u]?
+        let next_node = nextState_highlevel(cur_node, action, agentID, gameState);
+        let opponent_action_path = dfs_level_1_visit(agentID, gameState, tar_loc, cur_depth, max_depth, next_node, player_index, processed_nodes)
+        let next_node2 = nextState_highlevel(cur_node, opponent_action_path[0], agentID, gameState);
+        if(checkDupedSimpState(processed_nodes, cur_node) == false){ // not processed
+            return dfs_level_2_visit(agentID, gameState, tar_loc, cur_depth + 1, max_depth, next_node2, player_index, processed_nodes);
+        }
+    }
+}
 
 
 
