@@ -357,6 +357,7 @@ const pi_testing3 = {
     "1":["c:4:4","C1"],
     "F":["@:4:7"]
 }
+
 let stage_testing3 = new GameState(map_testing3, player_list, loc_list, goal= 1, [],
                                     policy = pi_testing3);
 
