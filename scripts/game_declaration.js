@@ -99,8 +99,9 @@ class GameState {
     goal;
     collected;
     policy;
+    all_locs;
 
-    constructor(map, agents, loc, goal = 1, collected=[], policy = null){
+    constructor(map, agents, loc, goal = 1, collected=[], policy = null, all_locs = null){
         this.map = map;
         this.objs = generateObjects(map);
         this.agents = agents;
@@ -108,6 +109,7 @@ class GameState {
         this.goal = goal;
         this.collected = collected;
         this.policy = policy;
+        this.all_locs = all_locs;
     }
 }
 
@@ -132,6 +134,7 @@ const pi_tutorial1 = {
     1:[],
     F:[]
 }
+
 let stage_tutorial1 = new GameState(map_tutorial1, [player1], loc_list, goal= 1, [],
                             policy = pi_tutorial1);
 
@@ -170,8 +173,11 @@ const pi_training1 = {
     "1":["@:2:2","b:2:2","B1"],
     "F":["@:2:2","b:2:2","B1"]
 }
+
+const all_locs_training1 = ["@:1:1", "@:2:2", "a:1:1", "b:2:2", "A1", "B1"];
+
 let stage_training1 = new GameState(map_training1, player_list, loc_list, goal= 2, [],
-                                    policy = pi_training1);
+                                    policy = pi_training1, all_locs = all_locs_training1);
 
 
 let map_training2 =     [["#","#","#","#","#","#","#","#","#","#","#"],
@@ -191,8 +197,11 @@ const pi_training2 = {
     "1":["@:5:4","a:8:4","A2"],
     "F":["@:5:4","a:8:4","A2"]
 }
+
+const all_locs_training2 = ["@:5:5", "@:6:5", "@:5:5", "@:5:4", "a:5:9", "a:8:4", "b:6:9", "b:8:5", "A1", "A2", "B1", "B2"];
+
 let stage_training2 = new GameState(map_training2,  player_list, loc_list, goal= 2, [],
-                                    policy = pi_training2);
+                                    policy = pi_training2, all_locs = all_locs_training2);
 
 
 let map_training3 =     [["#","#","#","#","#","#","#","#","#","#","#"],
@@ -212,8 +221,11 @@ const pi_training3 = {
     "1":["b:1:1","B1"],
     "F":["@:1:1","b:1:1","B1"]
 }
+
+const all_locs_training3 = ["@:1:1", "@:1:2", "a:3:3", "b:1:1", "A1", "B1"];
+
 let stage_training3 = new GameState(map_training3, player_list, loc_list, goal= 1, [],
-                                    policy = pi_training3);
+                                    policy = pi_training3, all_locs = all_locs_training3);
 
 let map_training4 =     [["#","#","#","#","#","#","#","#","#","#","#"],
                          ["#",".","b:3:3",".",".",".",".",".","c:3:2",".","#"],
@@ -232,8 +244,9 @@ const pi_training4 = {
     "1":["c:3:2","A1"],
     "F":["c:3:2","A1"]
 }
+const all_locs_training4 = ["@:2:2", "@:3:8", "b:3:3", "c:3:2", "A1", "B1", "C1"];
 let stage_training4 = new GameState(map_training4, player_list, loc_list, goal= 1, [],
-                                    policy = pi_training4);
+                                    policy = pi_training4, all_locs = all_locs_training4);
 
 let map_training5 =     [["#","#","#","#","#","#","#","#","#","#","#"],
                          ["#",".","b:3:2",".",".","c:4:4",".",".","d:4:7",".","#"],
@@ -252,8 +265,9 @@ const pi_training5 = {
     "1":["c:4:4","C1"],
     "F":["d:4:7","D1"]
 }
+const all_locs_training5 = ["@:2:2", "@:4:6", "@:8:3", "b:3:2", "c:4:4", "d:4:7", "A1", "B1", "C1", "D1"] 
 let stage_training5 = new GameState(map_training5, player_list, loc_list, goal= 1, [],
-                                    policy = pi_training5);
+                                    policy = pi_training5, all_locs = all_locs_training5);
 
 let map_training6 =     [["#","#","#","#","#","#","#","#","#","#","#"],
                          ["#",".","a:2:2",".","b:4:6",".","c:4:3",".","d:5:7",".","#"],
@@ -272,8 +286,9 @@ const pi_training6 = {
     "1":["@:1:2","@:1:1"],
     "F":["@:7:2","@:8:3","c:4:3","C1"]
 }
+const all_locs_training6 = ["@:1:1", "@:1:2", "@:7:2", "@:8:3", "a:2:2", "b:4:6", "c:4:3", "d:5:7", "A1", "B1", "C1", "D1"];
 let stage_training6 = new GameState(map_training6, player_list, loc_list, goal= 1, [],
-                                    policy = pi_training6);
+                                    policy = pi_training6, all_locs = all_locs_training6);
 
 
 let map_training7 =     [["#","#","#","#","#","#","#","#","#","#","#"],
@@ -293,8 +308,9 @@ const pi_training7 = {
     "1":["@:3:4","@:3:3","b:3:3","B1"],
     "F":["@:8:4","@:3:4"]
 }
+const all_locs_training7 = ["@:2:2", "@:3:3", "@:3:4", "@:8:4", "a:1:1", "b:3:3", "c:4:7", "d:3:6", "A1", "B1", "C1", "D1"];
 let stage_training7 = new GameState(map_training7, player_list, loc_list, goal= 2, [],
-                                    policy = pi_training7);
+                                    policy = pi_training7, all_locs = all_locs_training7);
 
 // Testing Stages //
 
@@ -315,8 +331,9 @@ const pi_testing1 = {
     "1":["@:8:3","b:6:4","B1"],
     "F":["@:8:3","b:6:4","B1"]
 }
+const all_locs_testing1 = ["@:5:7", "@:6:7", "@:8:3", "@:9:3", "a:4:9", "a:4:10", "b:6:4", "b:6:5", "A1", "B1", "B2"];
 let stage_testing1 = new GameState(map_testing1,  player_list, loc_list, goal= 2, [],
-                                    policy = pi_testing1);
+                                    policy = pi_testing1, all_locs = all_locs_testing1);
 
 
 let map_testing2 =     [["#","#","#","#","#","#","#","#","#","#","#"],
@@ -336,8 +353,9 @@ const pi_testing2 = {
     "1":["b:3:3:1","B1"],
     "F":["@:1:1:1"]
 }
+const all_locs_testing2 = ["@:1:1:1", "@:1:1:2", "b:3:3:1", "b:3:3:2", "B1", "B2"];
 let stage_testing2 = new GameState(map_testing2, player_list, loc_list, goal= 1, [],
-                                    policy = pi_testing2);
+                                    policy = pi_testing2, all_locs = all_locs_testing2);
 
 
 let map_testing3 =     [["#","#","#","#","#","#","#","#","#","#","#"],
@@ -358,8 +376,11 @@ const pi_testing3 = {
     "F":["@:4:7"]
 }
 
+const all_locs_testing3 = ["c:4:4","b:3:3","@:4:7","@:2:2","C1","B1"];
+
 let stage_testing3 = new GameState(map_testing3, player_list, loc_list, goal= 1, [],
-                                    policy = pi_testing3);
+                                    policy = pi_testing3, all_locs = all_locs_testing3);
+
 
 let map_testing4 =     [["#","#","#","#","#","#","#","#","#","#","#"],
                          ["#",".",".","d:4:8",".",".","c:4:4",".","b:3:3",".","#"],
@@ -378,8 +399,9 @@ const pi_testing4 = {
     "1":["@:b:3:3","B1"],
     "F":["@:8:4"]
 }
+const all_locs_testing4 = ["@:8:4","@:7:3","@:4:3","c:4:4","b:3:3","D1","C1","B1"];
 let stage_testing4 = new GameState(map_testing4, player_list, loc_list, goal= 1, [],
-                                    policy = pi_testing4);
+                                    policy = pi_testing4, all_locs = all_locs_testing4);
 
 let map_testing5 =     [["#","#","#","#","#","#","#","#","#","#","#"],
                          ["#",".","d:2:8",".","c:2:2",".","b:1:1",".","a:1:6",".","#"],
@@ -398,8 +420,9 @@ const pi_testing5 = {
     "1":["@:1:1","@:3:3","A1"],
     "F":["@:7:4"]
 }
+const all_locs_testing5 = ["@:7:4","@:3:3","@:1:1","@:3:2","c:2:2","b:1:1","a:1:6","D1","C1","B1","A1"];
 let stage_testing5 = new GameState(map_testing5, player_list, loc_list, goal= 1, [],
-                                    policy = pi_testing5);
+                                    policy = pi_testing5, all_locs = all_locs_testing5);
 
 let map_testing6 =     [["#","#","#","#","#","#","#","#","#","#","#"],
                          ["#",".","b:1:1",".","d:4:7",".","c:3:9",".","a:7:4",".","#"],
@@ -418,8 +441,9 @@ const pi_testing6 = {
     "1":["@:1:1","@:8:2"],
     "F":["@:1:1","@:8:2"]
 }
+const all_locs_testing6 = ["@:2:2","@:1:1","@:8:2","@:3:3","b:1:1","d:4:7","c:3:9","a:7:4","B1","D1","C1","A1"];
 let stage_testing6 = new GameState(map_testing6, player_list, loc_list, goal= 1, [],
-                                    policy = pi_testing6);
+                                    policy = pi_testing6, all_locs = all_locs_testing6);
 
 let map_testing7 =     [["#","#","#","#","#","#","#","#","#","#","#"],
                          ["#",".","b:1:2",".","a:4:4",".","d:4:9",".","c:4:1",".","#"],
@@ -438,8 +462,9 @@ const pi_testing7 = {
     "1":["@:3:3","a:4:4","A1","@:2:1","b:1:2","B1"],
     "F":["@:7:4","@:6:2","c:4:1","C1"]
 }
+const all_locs_testing7 = ["@:2:1","@:3:3","@:6:2","@:7:4","b:1:2","a:4:4","d:4:9","c:4:1","B1","A1","D1","C1"];
 let stage_testing7 = new GameState(map_testing7, player_list, loc_list, goal= 2, [],
-                                    policy = pi_testing7);
+                                    policy = pi_testing7, all_locs = all_locs_testing7);
 
 let map_testing8 =     [["#","#","#","#","#","#","#","#","#","#","#"],
                          ["#",".","c:2:9",".","b:4:1",".","a:5:2",".","d:2:3",".","#"],
@@ -458,8 +483,9 @@ const pi_testing8 = {
     "1":["@:1:3","d:2:3","D1"],
     "F":["@:8:1","d:2:3","D1"]
 }
+const all_locs_testing8 = ["@:8:1","@:1:3","@:3:4","@:3:7","b:4:1","a:5:2","c:2:9","d:2:3","C1","B1","A1","D1"];
 let stage_testing8 = new GameState(map_testing8, player_list, loc_list, goal= 2, [],
-                                    policy = pi_testing8);
+                                    policy = pi_testing8, all_locs = all_locs_testing8);
 
 
 //TODO: function to check that the gameStage and all declaration is valid. 
@@ -473,7 +499,6 @@ const training_stages = [stage_training1, stage_training2, stage_training3, stag
 const testing_stages = [stage_testing1,stage_testing2,stage_testing3,stage_testing4,stage_testing5,stage_testing6];
 
 // let stages = [...tutorial_stages, ...training_stages, ...testing_stages];
-
 
 let stages = [stage_testing3];
 
