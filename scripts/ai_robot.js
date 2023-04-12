@@ -31,9 +31,9 @@ function nextAction(playerID, gameState){
 
     if(curLowPlan.length == 0){
 
-        // curLowPlan = bfs_level0(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map), undefined);
+        curLowPlan = bfs_level0(playerID, gameState, tar_loc = findLocation(curHighPlan[0],gameState.map), undefined);
         // curLowPlan = bfs_level1(playerID, "1", gameState, tar_loc = findLocation(curHighPlan[0],gameState.map), undefined);
-        curLowPlan = bfs_level2(playerID, "1", gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
+        // curLowPlan = bfs_level2(playerID, "1", gameState, tar_loc = findLocation(curHighPlan[0],gameState.map));
 
         if(curLowPlan.length != 0){
             //if found keep moving
@@ -145,6 +145,10 @@ function checkGoalLocation(player, tar_loc){
 const actions_list = [control.up, control.down, control.left, control.right, control.wait];
 
 function bfs_level0(agentID, gameState, tar_loc, searchNode){
+    /*
+    this agent find next state node then push it to the queue, if it hits the goal state, return the path history
+    */
+
     console.log("L0 start");
     
     if (tar_loc.length === 0){
@@ -198,6 +202,12 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
 
 
 function bfs_level1(agentID, otherID, gameState, tar_loc, searchNode){
+    /* 
+    this agent find next state node, then give this node to the bfs_level0, then compute other agent's level0 actions.
+    Then, this agent finds the optimal action given the other agent's level0 actions.
+    Then, this agent find next state node given that optimal response action.
+    Then, if hits the goal location, it returns the path history.
+    */
     console.log("L1 start");
 
     if (tar_loc.length === 0){
@@ -262,6 +272,12 @@ function bfs_level1(agentID, otherID, gameState, tar_loc, searchNode){
 
 
 function bfs_level2(agentID, otherID, gameState, tar_loc){
+    /* 
+    this agent find next state node, then give this node to the bfs_level1, then compute other agent's level1 actions.
+    Then, this agent finds the optimal action given the other agent's level1 actions.
+    Then, this agent find next state node given that optimal response action.
+    Then, if hits the goal location, it returns the path history.
+    */
     console.log("L2 start");
 
     if (tar_loc.length === 0){
@@ -321,6 +337,12 @@ function bfs_level2(agentID, otherID, gameState, tar_loc){
 }
 
 function agent_response_action(agentID, otherID, others_action, gameState, nextNode){
+    /* 
+    find the baseline plan (object) that has the location with the shortest distance to the other agent(human), 
+    if that plan is the same as the this agent's plan (conflict), this agent(robot) yeilds by removing this overlapped plan from its plan list,
+    Then, find the optimal action that can lead to the plan location with shortest distance to this agent
+    If no conflit, find the optimal action
+    */
     let other_player = nextNode.agents[findIndfromID(nextNode.agents, otherID)];
     let player = nextNode.agents[findIndfromID(nextNode.agents, agentID)];
     let curHighPlan_copy = curHighPlan;
