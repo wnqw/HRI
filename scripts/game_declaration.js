@@ -217,6 +217,7 @@ let map_training3 =     [["#","#","#","#","#","#","#","#","#","#","#"],
                          ["#","#","B1","#","#","#","#","#","A1","#","#"]];
 const pi_training3 = {
     "0":["@:1:1","b:1:1","B1"],
+    // "0":["a:3:3","b:1:1","B1"],
     "0.5":["b:1:1","B1"],
     "1":["b:1:1","B1"],
     "F":["@:1:1","b:1:1","B1"]
@@ -500,5 +501,5 @@ const testing_stages = [stage_testing1,stage_testing2,stage_testing3,stage_testi
 
 // let stages = [...tutorial_stages, ...training_stages, ...testing_stages];
 
-let stages = [stage_testing6];
+let stages = [stage_training3];
 
