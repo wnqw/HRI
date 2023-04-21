@@ -240,6 +240,7 @@ function bfs_level1(agentID, otherID, gameState, tar_loc, searchNode){
     q.push(searchNode); 
     let ind = 0;
     while(ind < q.length){
+        console.log('Q lenth:' + q.length);
         let curSearchNode = q[ind++];
 
         if(checkGoalLocation(curSearchNode.agents[player_ind], tar_loc) ){
@@ -343,7 +344,7 @@ function bfs_level2(agentID, otherID, gameState, tar_loc){
     return([]);
 }
 
-function agent_response_action(agentID, otherID, others_action, gameState, nextNode){
+function agent_response_action_static(agentID, otherID, others_action, gameState, nextNode){
     /* 
     find the baseline plan (object) that has the location with the shortest distance to the other agent(human), 
     if that plan is the same as the this agent's plan (conflict), this agent(robot) yeilds by removing this overlapped plan from its plan list,
@@ -498,8 +499,6 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
             return action;
         }
     }
-    // console.log('otehr action: ' + others_action);
-    // console.log('list:' + other_player[keyToInd.dir]);
     console.log("action is empty");
     return 0;
 }
