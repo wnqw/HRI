@@ -240,8 +240,10 @@ function bfs_level1(agentID, otherID, gameState, tar_loc, searchNode){
     q.push(searchNode); 
     let ind = 0;
     while(ind < q.length){
-        console.log('Q lenth:' + q.length);
+        // console.log('Q lenth:' + q.length);
         let curSearchNode = q[ind++];
+
+        console.log('node agent: ' + curSearchNode.agents[player_ind]);
 
         if(checkGoalLocation(curSearchNode.agents[player_ind], tar_loc) ){
             console.log("L1 found:" + q[ind-1].hist);
@@ -432,8 +434,6 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
     let other_loc_ele = gameState.map[other_loc[0]][other_loc[1]];
 
     if(other_loc_ele === "." || other_loc_ele === otherID){
-
-
         let others_distance_plan = [];
         for (const target_id of gameState.all_locs){ 
             let target_loc = findLocation(target_id, gameState.map);
