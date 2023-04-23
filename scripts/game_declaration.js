@@ -100,8 +100,9 @@ class GameState {
     collected;
     policy;
     all_locs;
+    all_deliver_places;
 
-    constructor(map, agents, loc, goal = 1, collected=[], policy = null, all_locs = null){
+    constructor(map, agents, loc, goal = 1, collected=[], policy = null, all_locs = null, all_deliver_places=null){
         this.map = map;
         this.objs = generateObjects(map);
         this.agents = agents;
@@ -110,6 +111,7 @@ class GameState {
         this.collected = collected;
         this.policy = policy;
         this.all_locs = all_locs;
+        this.all_deliver_places = all_deliver_places;
     }
 }
 
@@ -222,10 +224,11 @@ const pi_training3 = {
     "F":["@:1:1","b:1:1","B1"]
 }
 
-const all_locs_training3 = ["@:1:1", "@:1:2", "a:3:3", "b:1:1", "A1", "B1"];
+const all_locs_training3 = ["@:1:1", "@:1:2", "a:3:3", "b:1:1"];
+const all_deliver_places_training3 = ["B1", "A1"];
 
 let stage_training3 = new GameState(map_training3, player_list, loc_list, goal= 1, [],
-                                    policy = pi_training3, all_locs = all_locs_training3);
+                                    policy = pi_training3, all_locs = all_locs_training3, all_deliver_places = all_deliver_places_training3);
 
 let map_training4 =     [["#","#","#","#","#","#","#","#","#","#","#"],
                          ["#",".","b:3:3",".",".",".",".",".","c:3:2",".","#"],
