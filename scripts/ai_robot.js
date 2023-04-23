@@ -10,6 +10,7 @@ let robotLevel = 0;
 // low-level movement
 let curHighPlan = [];
 let curLowPlan = [];
+let curHighPlan_dynamic = []
 
 function setHighPlan(playerID, gameState){
     let agentInd = - 1; 
@@ -22,6 +23,7 @@ function setHighPlan(playerID, gameState){
     if(agentInd === -1) return;
 
     curHighPlan = gameState.policy[robotLevel];
+    curHighPlan_dynamic = gameState.all_locs;
     console.log(curHighPlan);
 }
 
@@ -240,14 +242,17 @@ function bfs_level1(agentID, otherID, gameState, searchNode){
         let curSearchNode = q[ind++];
 
 
-        // if(checkGoalLocation(curSearchNode.agents[player_ind], tar_loc) ){
-        //     console.log("L1 found:" + q[ind-1].hist);
-        //     return(q[ind-1].hist);
-        // }
-
         if(curSearchNode.tar_loc != undefined){
             if(checkGoalLocation(curSearchNode.agents[player_ind], curSearchNode.tar_loc)){
-                console.log("L1 found:" + q[ind-1].hist);
+                console.log("L1 found hist:" + q[ind-1].hist);
+                let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
+                console.log("L1 tar_id:" + tar_id);
+
+                var index = curHighPlan_dynamic.indexOf(tar_id);
+                if (index > -1) {
+                    curHighPlan_dynamic.splice(index, 1); // removes previous tar loc in list
+                }
+                console.log('new curHighPlan_dynamic: ', curHighPlan_dynamic);
                 return(q[ind-1].hist);
             }
         }
@@ -519,7 +524,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
 
     if(other_loc_ele === "." || other_loc_ele === otherID){
         let others_distance_plan = [];
-        for (const target_id of gameState.all_locs){ 
+        for (const target_id of curHighPlan_dynamic){ 
             let target_loc = findLocation(target_id, gameState.map);
             let others_distance = manhattanDistance(target_loc, other_loc);
             others_distance_plan.push([others_distance, target_id]);
@@ -541,7 +546,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
 
         let player_loc = [player[keyToInd.loc][0], player[keyToInd.loc][1]];
         player_distance_plan = [];
-        for (const target_id of gameState.all_locs){ 
+        for (const target_id of curHighPlan_dynamic){ 
             let target_loc = findLocation(target_id, gameState.map);
             let player_distance = manhattanDistance(target_loc, player_loc);
             player_distance_plan.push([player_distance, target_id]);
@@ -563,12 +568,6 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
         
         if (typeof findObjfromID(gameState, nearest_target_loc_to_player) === "object"){
             console.log("nearest_obj_to_player is object");
-
-            // console.log('obj weight: ' + nearest_obj_to_player.weight);
-            // console.log('obj fragility: ' + nearest_obj_to_player.fragility);
-
-            // console.log('str: ' + player_instance.str);
-            // console.log('dex: ' + player_instance.dex);
 
             if(check_if_can_interact(nearest_obj_to_player, player_instance)){
                 let action = find_action_to_loc(gameState, player, nearest_target_loc_to_player);
