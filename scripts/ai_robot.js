@@ -211,7 +211,7 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
 
 
 
-function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj_ids, other_obj_ids){
+function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_objIDs, other_objIDs){
     /* 
     this agent find next state node, then give this node to the bfs_level0, then compute other agent's level0 actions.
     Then, this agent finds the optimal action given the other agent's level0 actions.
@@ -220,8 +220,8 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
     */
     console.log("L1 start");
 
-    if (player_obj_ids.plans.length === 0){
-        console.log('player_obj_ids is empty');
+    if (player_objIDs.plans.length === 0){
+        console.log('L1 player_objIDs is empty');
         return ([]);
     }
 
@@ -259,11 +259,11 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
                 let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
                 console.log("L1 tar_id:" + tar_id);
 
-                var index = player_obj_ids.plans.indexOf(tar_id);
+                var index = player_objIDs.plans.indexOf(tar_id);
                 if (index > -1) {
-                    player_obj_ids.plans.splice(index, 1); // removes previous tar loc in list
+                    player_objIDs.plans.splice(index, 1); // removes previous tar loc in list
                 }
-                console.log('new player_obj_ids: ', player_obj_ids.plans);
+                console.log('new player_objIDs: ', player_objIDs.plans);
                 return(q[ind-1].hist);
             }
         }
@@ -284,7 +284,7 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
                 console.log("bfs_level1 others_leve0_actions is empty");
                 continue;
             }
-            let response_a_loc = agent_response_action_dynamic(agentID, otherID, others_leve0_actions[0], gameState, nextNode, player_obj_ids.plans, other_obj_ids.plans);
+            let response_a_loc = agent_response_action_dynamic(agentID, otherID, others_leve0_actions[0], gameState, nextNode, player_objIDs.plans, other_objIDs.plans);
             if (response_a_loc === 0){
                 console.log("bfs_level1 response_a_loc is empty");
                 continue;
@@ -307,7 +307,7 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
 }
 
 
-function bfs_level2(agentID, otherID, gameState, player_obj_ids, other_obj_ids){
+function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs){
     /* 
     this agent find next state node, then give this node to the bfs_level0, then compute other agent's level0 actions.
     Then, this agent finds the optimal action given the other agent's level0 actions.
@@ -315,9 +315,9 @@ function bfs_level2(agentID, otherID, gameState, player_obj_ids, other_obj_ids){
     Then, if hits the goal location, it returns the path history.
     */
     console.log("L2 start");
-
-    if (player_obj_ids.plans.length === 0){
-        console.log('player_obj_ids is empty');
+    console.log('player_objIDs: ', player_objIDs.plans);
+    if (player_objIDs.plans.length === 0){
+        console.log('L2 player_objIDs is empty');
         return ([]);
     }
 
@@ -345,16 +345,19 @@ function bfs_level2(agentID, otherID, gameState, player_obj_ids, other_obj_ids){
          let curSearchNode = q[ind++];
 
          if(curSearchNode.tar_loc != undefined){
+            let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
+            console.log("L2 tar_id:" + tar_id);
+
             if(checkGoalLocation(curSearchNode.agents[player_ind], curSearchNode.tar_loc)){
                 console.log("L2 found hist:" + q[ind-1].hist);
                 let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
                 console.log("L2 tar_id:" + tar_id);
 
-                var index = player_obj_ids.plans.indexOf(tar_id);
+                var index = player_objIDs.plans.indexOf(tar_id);
                 if (index > -1) {
-                    player_obj_ids.plans.splice(index, 1); // removes previous tar loc in list
+                    player_objIDs.plans.splice(index, 1); // removes previous tar loc in list
                 }
-                console.log('new player_obj_ids: ', player_obj_ids.plans);
+                console.log('new player_objIDs: ', player_objIDs.plans);
                 return(q[ind-1].hist);
             }
         }
@@ -370,17 +373,18 @@ function bfs_level2(agentID, otherID, gameState, player_obj_ids, other_obj_ids){
             }
             let other_tar_loc = findLocation(other_tar_id, gameState.map);
 
-            let others_leve1_actions = bfs_level1(otherID, agentID, gameState, nextNode, other_tar_loc, other_obj_ids, player_obj_ids);
+            let others_leve1_actions = bfs_level1(otherID, agentID, gameState, nextNode, other_tar_loc, other_objIDs, player_objIDs);
             if (others_leve1_actions.length === 0){
                 console.log("bfs_level2 others_leve1_actions is empty");
                 continue;
             }
                         
-            let response_a_loc = agent_response_action_dynamic(agentID, otherID, others_leve1_actions[0], gameState, nextNode, player_obj_ids.plans, other_obj_ids.plans);
+            let response_a_loc = agent_response_action_dynamic(agentID, otherID, others_leve1_actions[0], gameState, nextNode, player_objIDs.plans, other_objIDs.plans);
             if (response_a_loc === 0){
                 console.log("bfs_level2 response_a_loc is empty");
                 continue;
             }
+            // console.log('response_a_loc: ', response_a_loc);
 
             let response_a = response_a_loc[0];
             let nearest_tar_loc = response_a_loc[1];
@@ -404,9 +408,9 @@ function bfs_level2(agentID, otherID, gameState, player_obj_ids, other_obj_ids){
 // interact with obj: if human cant do, and robot can do 
 // if not interact: robot find next nearest obj
 
-function agent_response_action_dynamic(agentID, otherID, others_action, gameState, nextNode, player_obj_ids, other_obj_ids){
+function agent_response_action_dynamic(agentID, otherID, others_action, gameState, nextNode, player_objIDs, other_objIDs){
 
-    if(player_obj_ids.length === 0){
+    if(player_objIDs.length === 0){
         console.log("curHighPlan_level is empty");
         return 0;
     }
@@ -430,7 +434,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
 
         if(other_loc_ele === "." || other_loc_ele === otherID){
              
-            nearest_target_id_to_other = find_nearest_target_id_to_player(gameState, other_loc, other_obj_ids);
+            nearest_target_id_to_other = find_nearest_target_id_to_player(gameState, other_loc, other_objIDs);
             let nearest_target_loc_to_other = findLocation(nearest_target_id_to_other, gameState.map);
             let nearest_obj_to_other = findObjfromID(gameState, nearest_target_loc_to_other)
 
@@ -446,10 +450,10 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
         // if cant help human
         let player_loc = [player[keyToInd.loc][0], player[keyToInd.loc][1]];
 
-        let nearest_target_id_to_player = find_nearest_target_id_to_player(gameState, player_loc, player_obj_ids);
+        let nearest_target_id_to_player = find_nearest_target_id_to_player(gameState, player_loc, player_objIDs);
         if ((nearest_target_id_to_player === nearest_target_id_to_other) && (nearest_target_id_to_other !== undefined)){
             console.log("nearest target overlap: " + nearest_target_id_to_player);
-            nearest_target_id_to_player = find_next_nearest_target_id_to_player(gameState, player_loc, player_obj_ids);
+            nearest_target_id_to_player = find_next_nearest_target_id_to_player(gameState, player_loc, player_objIDs);
         }
 
         let nearest_target_loc_to_player = findLocation(nearest_target_id_to_player, gameState.map);
