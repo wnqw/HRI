@@ -273,7 +273,7 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
 
             let other_player = nextNode.agents[findIndfromID(nextNode.agents, otherID)]; // prev loc needed
             let other_loc = [other_player[keyToInd.loc][0], other_player[keyToInd.loc][1]];
-            let other_tar_id = find_nearest_target_id_to_player(gameState, other_loc, gameState.all_locs);
+            let other_tar_id = find_nearest_target_id_to_player(gameState, other_loc, other_objIDs.plans);
             if (other_tar_id === 0){
                 break;
             }
@@ -367,7 +367,7 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs){
 
             let other_player = nextNode.agents[findIndfromID(nextNode.agents, otherID)]; // prev loc needed
             let other_loc = [other_player[keyToInd.loc][0], other_player[keyToInd.loc][1]];
-            let other_tar_id = find_nearest_target_id_to_player(gameState, other_loc, gameState.all_locs);
+            let other_tar_id = find_nearest_target_id_to_player(gameState, other_loc, other_objIDs.plans);
             if (other_tar_id === 0){
                 break;
             }
