@@ -6,14 +6,16 @@ const dirToMovement = {
     wait: [0, 0]
 }
 
-let robotLevel = 0;
-// low-level movement
-let curHighPlan = [];
-let curLowPlan = [];
+let robotLevel = 0; // for level 0
+
+// high-level movement
+let curHighPlan_Robot_level0 = [];
 var curHighPlan_Robot_level1 = {plans: []};
 var curHighPlan_Robot_level2 = {plans: []};
 var curHighPlan_Human_level1 = {plans: []};
 var curHighPlan_Human_level2 = {plans: []};
+// low-level movement
+let curLowPlan = [];
 
 function setHighPlan(playerID, gameState){
     let agentInd = - 1; 
@@ -25,29 +27,28 @@ function setHighPlan(playerID, gameState){
     }
     if(agentInd === -1) return;
 
-    curHighPlan = gameState.policy[robotLevel];
+    curHighPlan_Robot_level0 = gameState.policy[robotLevel];
     curHighPlan_Robot_level1.plans = gameState.all_locs;
     curHighPlan_Robot_level2.plans = gameState.all_locs;
     curHighPlan_Human_level1.plans = gameState.all_locs;
     curHighPlan_Human_level2.plans = gameState.all_locs;
-    console.log(curHighPlan);
+    console.log('initial curHighPlan_Robot_level0: ' + curHighPlan_Robot_level0);
 }
 
 
 function nextAction(playerID, gameState){
-    console.log('curHighPlan: ' + curHighPlan);
-    if(curHighPlan.length===0 && curLowPlan.length ===0) return;
+    if(curHighPlan_Robot_level0.length===0 && curLowPlan.length ===0) return;
 
     if(curLowPlan.length == 0){
 
-        // curLowPlan = bfs_level0(playerID, gameState, tar_loc = findLocation(curHighPlan[0], gameState.map), undefined);
+        // curLowPlan = bfs_level0(playerID, gameState, tar_loc = findLocation(curHighPlan_Robot_level0[0], gameState.map), undefined);
         // curLowPlan = bfs_level1(playerID, "1", gameState, undefined, undefined, curHighPlan_Robot_level1, curHighPlan_Human_level1);
         curLowPlan = bfs_level2(playerID, "1", gameState, curHighPlan_Robot_level2, curHighPlan_Human_level2, curHighPlan_Robot_level1, curHighPlan_Human_level1);
 
         if(curLowPlan.length != 0){
             //if found keep moving
             curLowPlan.push("interact");
-            curHighPlan.shift();
+            curHighPlan_Robot_level0.shift();
         }
     }
     
@@ -156,8 +157,8 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
     /*
     this agent find next state node then push it to the queue, if it hits the goal state, return the path history
     */
-
     console.log("L0 start");
+    console.log('current curHighPlan_Robot_level0: ' + curHighPlan_Robot_level0);
 
     if (tar_loc.length === 0){
         console.log("bfs_level0 tar_loc is []");
