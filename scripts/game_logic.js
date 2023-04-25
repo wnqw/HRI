@@ -62,7 +62,7 @@ function resetPlayers(stage){
 
 function clearStage(){
    //Display Clear Message and reset or stop
-   console.log("clear");
+   console.log("Reset stage");
    //Move to the next stage if possible
    currentStage +=1;
    if(currentStage < stages.length){
@@ -76,7 +76,7 @@ function clearStage(){
 
    }else{
       //done
-      console.log("done");
+      console.log("currentStage >= stages.length");
    }
 }
 
@@ -213,7 +213,7 @@ function movePlayer(cmd){
    }
 
    if(checkEndGame(curStage)){
-       console.log("Stage Clear!!")
+       console.log("Game Ends!!");
        clearStage();
    }
 }

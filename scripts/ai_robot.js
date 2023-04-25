@@ -6,7 +6,8 @@ const dirToMovement = {
     wait: [0, 0]
 }
 
-let robotLevel = 0; // for level 0
+// ROBOT LEVEL
+let robot_bfs_level = 1;
 
 // high-level movement
 let curHighPlan_Robot_level0 = [];
@@ -14,8 +15,12 @@ var curHighPlan_Robot_level1 = {plans: []};
 var curHighPlan_Robot_level2 = {plans: []};
 var curHighPlan_Human_level1 = {plans: []};
 var curHighPlan_Human_level2 = {plans: []};
+
 // low-level movement
 let curLowPlan = [];
+
+// others
+let level0robot_policy = 0; 
 
 function setHighPlan(playerID, gameState){
     let agentInd = - 1; 
@@ -27,7 +32,7 @@ function setHighPlan(playerID, gameState){
     }
     if(agentInd === -1) return;
 
-    curHighPlan_Robot_level0 = gameState.policy[robotLevel];
+    curHighPlan_Robot_level0 = gameState.policy[level0robot_policy];
     curHighPlan_Robot_level1.plans = gameState.all_locs;
     curHighPlan_Robot_level2.plans = gameState.all_locs;
     curHighPlan_Human_level1.plans = gameState.all_locs;
@@ -39,14 +44,19 @@ function setHighPlan(playerID, gameState){
 function nextAction(playerID, gameState){
     if(curHighPlan_Robot_level0.length===0 && curLowPlan.length ===0) return;
 
-    if(curLowPlan.length == 0){
+    if(curLowPlan.length === 0){
 
-        // curLowPlan = bfs_level0(playerID, gameState, tar_loc = findLocation(curHighPlan_Robot_level0[0], gameState.map), undefined);
-        // curLowPlan = bfs_level1(playerID, "1", gameState, undefined, undefined, curHighPlan_Robot_level1, curHighPlan_Human_level1);
-        curLowPlan = bfs_level2(playerID, "1", gameState, curHighPlan_Robot_level2, curHighPlan_Human_level2, curHighPlan_Robot_level1, curHighPlan_Human_level1);
-
+        if (robot_bfs_level === 0){
+            curLowPlan = bfs_level0(playerID, gameState, tar_loc = findLocation(curHighPlan_Robot_level0[0], gameState.map), undefined);
+        }
+        else if (robot_bfs_level === 1){
+            curLowPlan = bfs_level1(playerID, "1", gameState, undefined, undefined, curHighPlan_Robot_level1, curHighPlan_Human_level1);
+        }
+        else if (robot_bfs_level === 2){
+            curLowPlan = bfs_level2(playerID, "1", gameState, curHighPlan_Robot_level2, curHighPlan_Human_level2, curHighPlan_Robot_level1, curHighPlan_Human_level1);
+        }
+        
         if(curLowPlan.length != 0){
-            //if found keep moving
             curLowPlan.push("interact");
             curHighPlan_Robot_level0.shift();
         }
@@ -411,7 +421,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
         let player_loc = [player[keyToInd.loc][0], player[keyToInd.loc][1]];
 
         let nearest_target_id_to_player = find_nearest_target_id_to_player(gameState, player_loc, player_objIDs);
-        if ((nearest_target_id_to_player === nearest_target_id_to_other) && (nearest_target_id_to_other !== undefined)){
+        if ((nearest_target_id_to_player === nearest_target_id_to_other) && (nearest_target_id_to_other != undefined)){
             console.log("nearest target overlap: " + nearest_target_id_to_player);
             nearest_target_id_to_player = find_next_nearest_target_id_to_player(gameState, player_loc, player_objIDs);
         }
