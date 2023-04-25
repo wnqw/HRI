@@ -159,8 +159,6 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
 
     console.log("L0 start");
 
-    // console.log('node: ' + searchNode.agents);
-    
     if (tar_loc.length === 0){
         console.log("bfs_level0 tar_loc is []");
         return ([]);
@@ -168,7 +166,6 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
 
     let q = [];    
    
-    //Manually construct the initial simplified player list
     const agents = []; 
     for(const a of gameState.agents){
        //The key elements are just id, location, and direction (not holding yet)
@@ -220,19 +217,11 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
     */
     console.log("L1 start");
 
-    if (player_objIDs.plans.length === 0){
-        console.log('L1 player_objIDs is empty');
-        return ([]);
-    }
-
     let q = [];    
    
-    //Manually construct the initial simplified player list
     const agents = []; 
 
-    // console.log(gameState.agents);
     for(const a of gameState.agents){
-       //The key elements are just id, location, and direction (not holding yet)
        agents.push([ a.id, a.loc, a.direction]);
     }
     const player_ind = findIndfromID(agents, agentID);
@@ -249,12 +238,9 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
     q.push(searchNode); 
     let ind = 0;
     while(ind < q.length){
-        // console.log('Q lenth:' + q.length);
         let curSearchNode = q[ind++];
 
-
         if(curSearchNode.tar_loc != undefined){
-
             if(checkGoalLocation(curSearchNode.agents[player_ind], curSearchNode.tar_loc)){
                 console.log("L1 found hist:" + q[ind-1].hist);
                 let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
@@ -295,7 +281,6 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
                 q.push(nextNode2);
             }
         }
-        // console.log('q length: ', q.length);
     }    
 
     console.log("L1 Not Found");
@@ -312,20 +297,11 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
     */
     console.log("L2 start");
 
-    console.log('player_objIDs: ', player_objIDs.plans);
-    if (player_objIDs.plans.length === 0){
-        console.log('L2 player_objIDs is empty');
-        return ([]);
-    }
-
     let q = [];    
    
-    //Manually construct the initial simplified player list
     const agents = []; 
 
-    // console.log(gameState.agents);
     for(const a of gameState.agents){
-       //The key elements are just id, location, and direction (not holding yet)
        agents.push([ a.id, a.loc, a.direction]);
     }
     const player_ind = findIndfromID(agents, agentID);
@@ -341,14 +317,7 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
     while(ind < q.length){
          let curSearchNode = q[ind++];
 
-         console.log('L2 new curHighPlan_Robot_level2: ', curHighPlan_Robot_level2.plans);
-         console.log('L2 new curHighPlan_Human_level2: ', curHighPlan_Human_level2.plans);
-
          if(curSearchNode.tar_loc != undefined){
-            let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
-            // console.log("L2 playerloc:" + curSearchNode.agents[player_ind][1]);
-            console.log("L2 tar_id:" + tar_id);
-
             if(checkGoalLocation(curSearchNode.agents[player_ind], curSearchNode.tar_loc)){
                 console.log("L2 found hist:" + q[ind-1].hist);
                 let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
@@ -379,7 +348,6 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
                 console.log("bfs_level2 response_a_loc is empty");
                 continue;
             }
-            // console.log('response_a_loc: ', response_a_loc);
 
             let response_a = response_a_loc[0];
             let nearest_tar_loc = response_a_loc[1];
@@ -405,11 +373,6 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
 
 function agent_response_action_dynamic(agentID, otherID, others_action, gameState, nextNode, player_objIDs, other_objIDs){
 
-    if(player_objIDs.length === 0){
-        console.log("player_objIDs is empty");
-        return 0;
-    }
-    
     let other_player = nextNode.agents[findIndfromID(nextNode.agents, otherID)];
     let player = nextNode.agents[findIndfromID(nextNode.agents, agentID)];
     let player_instance = findAgentfromID(gameState, agentID);
@@ -417,6 +380,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
 
 
     if (player_instance.hold_object == null){
+        // try help the other player
         let other_loc = [other_player[keyToInd.loc][0], other_player[keyToInd.loc][1]];
 
         if(others_action === other_player[keyToInd.dir]){
@@ -442,7 +406,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
             }
         }
 
-        // if cant help human
+        // if cant help the other player, find nearest obj to do
         let player_loc = [player[keyToInd.loc][0], player[keyToInd.loc][1]];
 
         let nearest_target_id_to_player = find_nearest_target_id_to_player(gameState, player_loc, player_objIDs);
@@ -464,6 +428,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
     }
      
     else{
+        // is holding an obj, try deliver it
         let deliver_id = find_deliver_place(player_instance, gameState);
         console.log('deliver_id: ' + deliver_id);
         let deliver_loc = findLocation(deliver_id, gameState.map);
