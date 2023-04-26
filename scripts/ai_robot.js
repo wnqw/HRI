@@ -58,7 +58,9 @@ function nextAction(playerID, gameState){
         
         if(curLowPlan.length != 0){
             curLowPlan.push("interact");
-            curHighPlan_Robot_level0.shift();
+            if (robot_bfs_level === 0){
+                curHighPlan_Robot_level0.shift();
+            }
         }
     }
     
@@ -270,6 +272,7 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
                 break;
             }
             let other_tar_loc = findLocation(other_tar_id, gameState.map);
+            if (other_tar_loc === []) continue;
 
             let others_leve0_actions = bfs_level0(otherID, gameState, other_tar_loc, nextNode);
             if (others_leve0_actions.length === 0){
@@ -347,6 +350,7 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
                 break;
             }
             let other_tar_loc = findLocation(other_tar_id, gameState.map);
+            if (other_tar_loc === []) continue;
 
             let others_leve1_actions = bfs_level1(otherID, agentID, gameState, nextNode, other_tar_loc, other_objIDs_1, player_objIDs_1);
             if (others_leve1_actions.length === 0){
@@ -474,6 +478,7 @@ function findObjfromID(gamegState, id){
             return(obj);
         }
     }
+    console.log("cant find obj");
     return false;
 }
 
@@ -483,6 +488,7 @@ function findAgentfromID(gameState, id){
             return(agent);
         }
     }
+    console.log("cant find agent");
     return false;
 }
 
@@ -520,6 +526,7 @@ function find_nearest_target_id_to_player(gameState, player_loc, locs){
     player_distance_plan = [];
     for (const target_id of locs){ 
         let target_loc = findLocation(target_id, gameState.map);
+        if (target_loc === []) continue;
         let player_distance = manhattanDistance(target_loc, player_loc);
         player_distance_plan.push([player_distance, target_id]);
     }
@@ -538,6 +545,7 @@ function find_next_nearest_target_id_to_player(gameState, player_loc, locs){
     player_distance_plan = [];
     for (const target_id of locs){ 
         let target_loc = findLocation(target_id, gameState.map);
+        if (target_loc === []) continue;
         let player_distance = manhattanDistance(target_loc, player_loc);
         player_distance_plan.push([player_distance, target_id]);
     }
