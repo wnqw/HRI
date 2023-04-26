@@ -424,7 +424,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
 
         let nearest_target_id_to_player = find_nearest_target_id_to_player(gameState, player_loc, player_objIDs);
         if ((nearest_target_id_to_player === nearest_target_id_to_other) && (nearest_target_id_to_other != undefined)){
-            // console.log("nearest target overlap: " + nearest_target_id_to_player);
+            console.log("nearest target overlap: " + nearest_target_id_to_player);
             nearest_target_id_to_player = find_next_nearest_target_id_to_player(gameState, player_loc, player_objIDs);
         }
 
