@@ -436,6 +436,9 @@ function find_next_nearest_target_id_to_player(gameState, player_loc, locs){
     return player_distance_plan[1][1];
 }
 
+
+
+
 function checkGoalLocation(player, tar_loc){
     //Input: simplified player 
     //If adjacent and dir = point to the target, true
@@ -447,7 +450,6 @@ function checkGoalLocation(player, tar_loc){
     }
     return(false);
 }
-
 
 
 function setHighPlan(playerID, gameState){
