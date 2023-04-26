@@ -41,7 +41,7 @@ function findLocation(id, map){
     if (id.charAt(0) !== '@'){
         console.error("Couldn't find the object");
     }
-    console.log("Couldn't find the object, might be removed obstacle");
+    console.log("Couldn't find the object. Might be a removed obstacle");
     return([]);
 }
 
