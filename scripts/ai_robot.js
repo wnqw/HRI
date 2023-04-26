@@ -450,7 +450,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
 
         var index = player_objIDs.indexOf(nearest_target_id_to_player);
         if (index > -1) {
-            player_objIDs.splice(index, 1); // removes previous tar loc in list
+            player_objIDs.splice(index, 1); // do next interatable target
         }
     }
      
