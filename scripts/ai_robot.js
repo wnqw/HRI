@@ -131,7 +131,9 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
         let curNode = q[ind++];
 
         if(checkGoalLocation(curNode.agents[player_ind], tar_loc) ){
-            console.log("L0 found hist: " + q[ind-1].hist);
+            console.log("L0 found");
+            // console.log("L0 hist: " + q[ind-1].hist);
+            // console.log("L0 tar_loc: " + tar_loc);
             return(q[ind-1].hist);
         }
         
@@ -252,11 +254,11 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
         if(curSearchNode.tar_loc != undefined){
             if(checkGoalLocation(curSearchNode.agents[player_ind], curSearchNode.tar_loc)){
                 console.log("L1 found");
-                let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
-                console.log("L1 tar_id:" + tar_id);
-                console.log('L1 hist: ' + q[ind-1].hist);
-                console.log('L1 others_tar_id: ' + q[ind-1].others_tar_id);
-                console.log('L1 others_hist: ' + q[ind-1].others_hist);
+                // let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
+                // console.log("L1 tar_id:" + tar_id);
+                // console.log('L1 hist: ' + q[ind-1].hist);
+                // console.log('L1 others_tar_id: ' + q[ind-1].others_tar_id);
+                // console.log('L1 others_hist: ' + q[ind-1].others_hist);
                  
                 return(q[ind-1].hist);
             }
@@ -340,11 +342,11 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
          if(curSearchNode.tar_loc != undefined){
             if(checkGoalLocation(curSearchNode.agents[player_ind], curSearchNode.tar_loc)){
                 console.log("L2 found");
-                let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
-                console.log("L2 tar_id:" + tar_id);
-                console.log('L2 hist: ' + q[ind-1].hist);
-                console.log('L2 others_tar_id: ' + q[ind-1].others_tar_id);
-                console.log('L2 others_hist: ' + q[ind-1].others_hist);
+                // let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
+                // console.log("L2 tar_id:" + tar_id);
+                // console.log('L2 hist: ' + q[ind-1].hist);
+                // console.log('L2 others_tar_id: ' + q[ind-1].others_tar_id);
+                // console.log('L2 others_hist: ' + q[ind-1].others_hist);
 
                 return(q[ind-1].hist);
             }
