@@ -274,18 +274,19 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
             if (other_tar_loc === []) continue;
 
             let others_leve0_actions = bfs_level0(otherID, gameState, other_tar_loc, nextNode);
-            if (others_leve0_actions === []){
+            if (others_leve0_actions.length === 0){
                 console.log("bfs_level1 others_leve0_actions is empty");
                 continue;
             }
             let response_a_loc = agent_response_action_dynamic(agentID, otherID, others_leve0_actions[0], gameState, nextNode, player_objIDs.plans, other_objIDs.plans);
-            if (response_a_loc === []){
+            if (response_a_loc.length === 0){
                 console.log("bfs_level1 response_a_loc is empty");
                 continue;
             }
 
             let response_a = response_a_loc[0];
             let nearest_tar_loc = response_a_loc[1];
+
 
             let nextNode2 = nextState(nextNode, response_a, agentID, gameState);
             nextNode2.tar_loc = nearest_tar_loc;
@@ -350,13 +351,13 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
             if (other_tar_loc === []) continue;
 
             let others_leve1_actions = bfs_level1(otherID, agentID, gameState, nextNode, other_tar_loc, other_objIDs_1, player_objIDs_1);
-            if (others_leve1_actions === []){
+            if (others_leve1_actions.length === 0){
                 console.log("bfs_level2 others_leve1_actions is empty");
                 continue;
             }
                         
             let response_a_loc = agent_response_action_dynamic(agentID, otherID, others_leve1_actions[0], gameState, nextNode, player_objIDs.plans, other_objIDs.plans);
-            if (response_a_loc === []){
+            if (response_a_loc.length === 0){
                 console.log("bfs_level2 response_a_loc is empty");
                 continue;
             }
@@ -526,6 +527,8 @@ function find_nearest_target_id_to_player(gameState, player_loc, locs){
         player_distance_plan.push([player_distance, target_id]);
     }
     player_distance_plan.sort(function(a, b){return a[0] - b[0]});
+    // console.log('player_distance_plan: ' + player_distance_plan);
+
 
     let nearest_target_id_to_player = player_distance_plan[0][1];
     
