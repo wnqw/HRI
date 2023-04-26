@@ -274,7 +274,7 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
                 continue;
             }
 
-            let others_leve0_actions = bfs_level0(otherID, gameState, other_tar_loc, nextNode, other_objIDs);
+            let others_leve0_actions = bfs_level0(otherID, gameState, other_tar_loc, nextNode);
             if (others_leve0_actions.length === 0){
                 console.log("bfs_level1 others_leve0_actions is empty");
                 continue;
@@ -394,7 +394,88 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
 }
 
 
+function agent_response_action_dynamic(agentID, otherID, others_action, gameState, nextNode, player_objIDs, other_objIDs){
+    // robot find obj nearest to human
+    // interact with obj: if human cant do, and robot can do 
+    // if not interact: robot find next nearest obj
 
+    let other_player = nextNode.agents[findIndfromID(nextNode.agents, otherID)];
+    let player = nextNode.agents[findIndfromID(nextNode.agents, agentID)];
+    let player_instance = findAgentfromID(gameState, agentID);
+    let other_instance = findAgentfromID(gameState, otherID);
+
+
+    if (player_instance.hold_object == null){
+        // try help the other player
+        let other_loc = [other_player[keyToInd.loc][0], other_player[keyToInd.loc][1]];
+
+        if(others_action === other_player[keyToInd.dir]){
+            other_loc[0] = other_loc[0] + dirToMovement[others_action][0];
+            other_loc[1] = other_loc[1] + dirToMovement[others_action][1];
+        }
+
+        let other_loc_ele = gameState.map[other_loc[0]][other_loc[1]];
+        let nearest_target_id_to_other = undefined;
+
+        if(other_loc_ele === "." || other_loc_ele === otherID){
+             
+            nearest_target_id_to_other = find_nearest_target_id_to_player(gameState, other_loc, other_objIDs);
+            let nearest_target_loc_to_other = findLocation(nearest_target_id_to_other, gameState.map);
+            if (nearest_target_loc_to_other.length === 0) return [];
+            let nearest_obj_to_other = findObjfromID(gameState, nearest_target_loc_to_other)
+
+            // console.log("nearest_target_id_to_other: " + nearest_target_id_to_other);
+
+            if (!(check_if_can_interact(nearest_obj_to_other, other_instance)) && check_if_can_interact(nearest_obj_to_other, player_instance)){
+                let action = find_action_to_loc(gameState, player, nearest_target_loc_to_other);
+                console.log("action case 1: " + action);
+                return [action, nearest_target_loc_to_other];
+            }
+        }
+
+        // if cant help the other player, find nearest obj to do
+        let player_loc = [player[keyToInd.loc][0], player[keyToInd.loc][1]];
+
+        let nearest_target_id_to_player = find_nearest_target_id_to_player(gameState, player_loc, player_objIDs);
+        if ((nearest_target_id_to_player === nearest_target_id_to_other) && (nearest_target_id_to_other != undefined)){
+            console.log("nearest target overlap: " + nearest_target_id_to_player);
+            nearest_target_id_to_player = find_next_nearest_target_id_to_player(gameState, player_loc, player_objIDs);
+        }
+
+        let nearest_target_loc_to_player = findLocation(nearest_target_id_to_player, gameState.map);
+        if (nearest_target_loc_to_player.length === 0) return [];
+        let nearest_obj_to_player = findObjfromID(gameState, nearest_target_loc_to_player);
+        
+        // console.log('nearest_target_id_to_player: ' + nearest_target_id_to_player);
+
+        if(check_if_can_interact(nearest_obj_to_player, player_instance)){
+            let action = find_action_to_loc(gameState, player, nearest_target_loc_to_player);
+            console.log("action case 2: " + action);
+            return [action, nearest_target_loc_to_player];
+        }
+
+        var index = player_objIDs.indexOf(nearest_target_id_to_player);
+        if (index > -1) {
+            player_objIDs.splice(index, 1); // do next interatable target
+        }
+    }
+     
+    else{
+        // is holding an obj, try deliver it
+        let deliver_id = find_deliver_place(player_instance, gameState);
+        // console.log('deliver_id: ' + deliver_id);
+        let deliver_loc = findLocation(deliver_id, gameState.map);
+        if (deliver_loc.length === 0) return [];
+        let action = find_action_to_loc(gameState, player, deliver_loc);
+        console.log("action case 3: " + action);
+        return [action, deliver_loc];
+    }
+
+    console.log("action is empty");
+    return ([]);
+}
+
+/*
 function agent_response_action_dynamic(agentID, otherID, others_action, gameState, nextNode, player_objIDs, other_objIDs, is_level0){
     // robot find obj nearest to human
     // interact with obj: if human cant do, and robot can do 
@@ -477,7 +558,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
     console.log("action is empty");
     return ([]);
 }
-
+*/
 
 
 function find_deliver_place(player_instance, gameState){

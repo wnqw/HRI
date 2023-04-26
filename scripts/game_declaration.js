@@ -750,5 +750,5 @@ const testing_stages = [stage_testing1,stage_testing2,stage_testing3,stage_testi
 
 // let stages = [...tutorial_stages, ...training_stages, ...testing_stages];
 
-let stages = [stage_training3];
+let stages = [stage_training1];
  
