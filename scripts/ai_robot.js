@@ -271,7 +271,10 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
             let other_loc = [other_player[keyToInd.loc][0], other_player[keyToInd.loc][1]];
             let other_tar_id = find_nearest_target_id_to_player(gameState, other_loc, other_objIDs.plans);
             let other_tar_loc = findLocation(other_tar_id, gameState.map);
-            if (other_tar_loc === []) continue;
+            if (other_tar_loc.length === 0) {
+                console.log('other_tar_loc is empty');
+                continue;
+            }
 
             let others_leve0_actions = bfs_level0(otherID, gameState, other_tar_loc, nextNode);
             if (others_leve0_actions.length === 0){
@@ -348,7 +351,10 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
             let other_loc = [other_player[keyToInd.loc][0], other_player[keyToInd.loc][1]];
             let other_tar_id = find_nearest_target_id_to_player(gameState, other_loc, other_objIDs.plans);
             let other_tar_loc = findLocation(other_tar_id, gameState.map);
-            if (other_tar_loc === []) continue;
+            if (other_tar_loc.length === 0) {
+                console.log('other_tar_loc is empty');
+                continue;
+            }
 
             let others_leve1_actions = bfs_level1(otherID, agentID, gameState, nextNode, other_tar_loc, other_objIDs_1, player_objIDs_1);
             if (others_leve1_actions.length === 0){
@@ -409,6 +415,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
              
             nearest_target_id_to_other = find_nearest_target_id_to_player(gameState, other_loc, other_objIDs);
             let nearest_target_loc_to_other = findLocation(nearest_target_id_to_other, gameState.map);
+            if (nearest_target_loc_to_other.length === 0) return [];
             let nearest_obj_to_other = findObjfromID(gameState, nearest_target_loc_to_other)
 
             // console.log("nearest_target_id_to_other: " + nearest_target_id_to_other);
@@ -430,6 +437,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
         }
 
         let nearest_target_loc_to_player = findLocation(nearest_target_id_to_player, gameState.map);
+        if (nearest_target_loc_to_player.length === 0) return [];
         let nearest_obj_to_player = findObjfromID(gameState, nearest_target_loc_to_player);
         
         // console.log('nearest_target_id_to_player: ' + nearest_target_id_to_player);
@@ -446,6 +454,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
         let deliver_id = find_deliver_place(player_instance, gameState);
         // console.log('deliver_id: ' + deliver_id);
         let deliver_loc = findLocation(deliver_id, gameState.map);
+        if (deliver_loc.length === 0) return [];
         let action = find_action_to_loc(gameState, player, deliver_loc);
         console.log("action case 3: " + action);
         return [action, deliver_loc];
@@ -522,16 +531,20 @@ function find_nearest_target_id_to_player(gameState, player_loc, locs){
     player_distance_plan = [];
     for (const target_id of locs){ 
         let target_loc = findLocation(target_id, gameState.map);
-        if (target_loc === []) continue;
+        if (target_loc.length === 0) continue;
         let player_distance = manhattanDistance(target_loc, player_loc);
         player_distance_plan.push([player_distance, target_id]);
     }
+    if (player_distance_plan.length === 0) {
+        console.log("find_nearest_target_id_to_player is false");
+        return false;
+    }
     player_distance_plan.sort(function(a, b){return a[0] - b[0]});
-    // console.log('player_distance_plan: ' + player_distance_plan);
-
-
     let nearest_target_id_to_player = player_distance_plan[0][1];
     
+    console.log('player_distance_plan: ' + player_distance_plan);
+    console.log('nearest_target_id_to_player: ' + nearest_target_id_to_player);
+
     return nearest_target_id_to_player;
 }
 
@@ -539,11 +552,14 @@ function find_next_nearest_target_id_to_player(gameState, player_loc, locs){
     player_distance_plan = [];
     for (const target_id of locs){ 
         let target_loc = findLocation(target_id, gameState.map);
-        if (target_loc === []) continue;
+        if (target_loc.length === 0) continue;
         let player_distance = manhattanDistance(target_loc, player_loc);
         player_distance_plan.push([player_distance, target_id]);
     }
-
+    if (player_distance_plan.length === 0) {
+        console.log("find_nearest_target_id_to_player is false");
+        return false;
+    }
     player_distance_plan.sort(function(a, b){return a[0] - b[0]});
 
     if (player_distance_plan.length === 1){
