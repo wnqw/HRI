@@ -17,7 +17,7 @@ let robot_bfs_level = 2;
 
 // high-level movement
 let curHighPlan_Robot_level0 = [];
-let curHighPlan_Robot_level0_dynamic = {plans: []};
+// let curHighPlan_Robot_level0_dynamic = {plans: []};
 var curHighPlan_Robot_level1 = {plans: []};
 var curHighPlan_Robot_level2 = {plans: []};
 var curHighPlan_Human_level1 = {plans: []};
@@ -69,10 +69,8 @@ function nextAction(playerID, gameState){
     if(curLowPlan.length === 0){
 
         if (robot_bfs_level === 0){
-            let tar_loc = findLocation(curHighPlan_Robot_level0[0], gameState.map);
-            if (tar_loc.length != 0){ 
-                curLowPlan = bfs_level0(playerID, gameState, tar_loc, undefined);
-            }
+            curLowPlan = bfs_level0(playerID, gameState, tar_loc=findLocation(curHighPlan_Robot_level0[0], gameState.map), undefined);
+
             // curLowPlan = bfs_level0_dynamic(playerID, gameState, undefined, undefined, curHighPlan_Robot_level0_dynamic);
         }
         else if (robot_bfs_level === 1){
@@ -128,19 +126,19 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
     q.push(searchNode); 
     let ind = 0;
     while(ind < q.length){
-        let curNode = q[ind++];
+        let curSearchNode = q[ind++];
 
-        if(checkGoalLocation(curNode.agents[player_ind], tar_loc) ){
+        if(checkGoalLocation(curSearchNode.agents[player_ind], tar_loc) ){
             console.log("L0 found");
-            // console.log("L0 hist: " + q[ind-1].hist);
+            // console.log("L0 hist: " + curSearchNode.hist);
             // console.log("L0 tar_loc: " + tar_loc);
-            return(q[ind-1].hist);
+            return(curSearchNode.hist);
         }
         
         for(const a of actions_list){
             //Generate new state if possible
             
-            let nextNode = nextState(curNode, a, agentID, gameState)
+            let nextNode = nextState(curSearchNode, a, agentID, gameState)
             //check repeat stage somehow
             if(checkDupedSimpState(q, nextNode) === false){
                 q.push(nextNode);
@@ -152,11 +150,9 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
     return([]);
 }
 
-
+/*
 function bfs_level0_dynamic(agentID, gameState, tar_loc, searchNode, player_objIDs){
-    /*
-    doesnt depend on a hardcoded plan, use greedy approach to find the next target
-    */
+    // doesnt depend on a hardcoded plan, use greedy approach to find the next target
     console.log("L0 start");
 
     let q = [];    
@@ -185,10 +181,10 @@ function bfs_level0_dynamic(agentID, gameState, tar_loc, searchNode, player_objI
             if(checkGoalLocation(curSearchNode.agents[player_ind], curSearchNode.tar_loc) ){
                 console.log("L0 found");
                 let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
-                console.log("L0 tar_id:" + tar_id);
-                console.log('L0 hist: ' + q[ind-1].hist);
+                console.log("L0 tar_id: " + tar_id);
+                console.log('L0 hist: ' + curSearchNode.hist);
 
-                return(q[ind-1].hist);
+                return(curSearchNode.hist);
             }
         }
         
@@ -215,7 +211,7 @@ function bfs_level0_dynamic(agentID, gameState, tar_loc, searchNode, player_objI
     console.log("L0 Not Found");
     return([]);
 }
-
+*/
 
 function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_objIDs, other_objIDs){
     /* 
@@ -254,13 +250,13 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
         if(curSearchNode.tar_loc != undefined){
             if(checkGoalLocation(curSearchNode.agents[player_ind], curSearchNode.tar_loc)){
                 console.log("L1 found");
-                // let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
-                // console.log("L1 tar_id:" + tar_id);
-                // console.log('L1 hist: ' + q[ind-1].hist);
-                // console.log('L1 others_tar_id: ' + q[ind-1].others_tar_id);
-                // console.log('L1 others_hist: ' + q[ind-1].others_hist);
+                let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
+                console.log("L1 tar_id: " + tar_id);
+                console.log('L1 hist: ' + curSearchNode.hist);
+                console.log('L1 others_tar_id: ' + curSearchNode.others_tar_id);
+                console.log('L1 others_hist: ' + curSearchNode.others_hist);
                  
-                return(q[ind-1].hist);
+                return(curSearchNode.hist);
             }
         }
 
@@ -342,13 +338,13 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
          if(curSearchNode.tar_loc != undefined){
             if(checkGoalLocation(curSearchNode.agents[player_ind], curSearchNode.tar_loc)){
                 console.log("L2 found");
-                // let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
-                // console.log("L2 tar_id:" + tar_id);
-                // console.log('L2 hist: ' + q[ind-1].hist);
-                // console.log('L2 others_tar_id: ' + q[ind-1].others_tar_id);
-                // console.log('L2 others_hist: ' + q[ind-1].others_hist);
+                let tar_id = gameState.map[curSearchNode.tar_loc[0]][curSearchNode.tar_loc[1]];
+                console.log("L2 tar_id: " + tar_id);
+                console.log('L2 hist: ' + curSearchNode.hist);
+                console.log('L2 others_tar_id: ' + curSearchNode.others_tar_id);
+                console.log('L2 others_hist: ' + curSearchNode.others_hist);
 
-                return(q[ind-1].hist);
+                return(curSearchNode.hist);
             }
         }
 
