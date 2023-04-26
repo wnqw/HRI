@@ -31,6 +31,65 @@ let level0robot_policy = 0;
 const actions_list = [control.up, control.down, control.left, control.right, control.wait];
 
 
+
+function setHighPlan(playerID, gameState){
+    let agentInd = - 1; 
+    
+    for(let i = 0; i < gameState.agents.length;i++){
+        if(gameState.agents[i].id === playerID){
+            agentInd = i;
+        }
+    }
+    if(agentInd === -1) return;
+
+    curHighPlan_Robot_level0 = gameState.policy[level0robot_policy];
+    curHighPlan_Robot_level1.plans = gameState.all_locs;
+    curHighPlan_Robot_level2.plans = gameState.all_locs;
+    curHighPlan_Human_level1.plans = gameState.all_locs;
+    curHighPlan_Human_level2.plans = gameState.all_locs;
+
+    if (robot_bfs_level === 0){
+        console.log('ROBOT LEVEL = 0');
+        console.log('initial curHighPlan_Robot_level0: ' + curHighPlan_Robot_level0);
+    }
+    else if (robot_bfs_level === 1){
+        console.log('ROBOT LEVEL = 1');
+    }
+    else if (robot_bfs_level === 2){
+        console.log('ROBOT LEVEL = 2');
+    }
+ }
+
+
+function nextAction(playerID, gameState){
+    if(curHighPlan_Robot_level0.length===0 && curLowPlan.length ===0) return;
+
+    if(curLowPlan.length === 0){
+
+        if (robot_bfs_level === 0){
+            curLowPlan = bfs_level0(playerID, gameState, tar_loc = findLocation(curHighPlan_Robot_level0[0], gameState.map), undefined);
+        }
+        else if (robot_bfs_level === 1){
+            curLowPlan = bfs_level1(playerID, "1", gameState, undefined, undefined, curHighPlan_Robot_level1, curHighPlan_Human_level1);
+        }
+        else if (robot_bfs_level === 2){
+            curLowPlan = bfs_level2(playerID, "1", gameState, curHighPlan_Robot_level2, curHighPlan_Human_level2, curHighPlan_Robot_level1, curHighPlan_Human_level1);
+        }
+        
+        if(curLowPlan.length != 0){
+            curLowPlan.push("interact");
+            if (robot_bfs_level === 0){
+                curHighPlan_Robot_level0.shift();
+            }
+        }
+    }
+    
+    const next_action = curLowPlan.shift();
+
+    executeAction(playerID, gameState, next_action);
+}
+
+
 function bfs_level0(agentID, gameState, tar_loc, searchNode){
     /*
     this agent find next state node then push it to the queue, if it hits the goal state, return the path history
@@ -449,64 +508,6 @@ function checkGoalLocation(player, tar_loc){
             return(true);
     }
     return(false);
-}
-
-
-function setHighPlan(playerID, gameState){
-    let agentInd = - 1; 
-    
-    for(let i = 0; i < gameState.agents.length;i++){
-        if(gameState.agents[i].id === playerID){
-            agentInd = i;
-        }
-    }
-    if(agentInd === -1) return;
-
-    curHighPlan_Robot_level0 = gameState.policy[level0robot_policy];
-    curHighPlan_Robot_level1.plans = gameState.all_locs;
-    curHighPlan_Robot_level2.plans = gameState.all_locs;
-    curHighPlan_Human_level1.plans = gameState.all_locs;
-    curHighPlan_Human_level2.plans = gameState.all_locs;
-
-    if (robot_bfs_level === 0){
-        console.log('ROBOT LEVEL = 0');
-        console.log('initial curHighPlan_Robot_level0: ' + curHighPlan_Robot_level0);
-    }
-    else if (robot_bfs_level === 1){
-        console.log('ROBOT LEVEL = 1');
-    }
-    else if (robot_bfs_level === 2){
-        console.log('ROBOT LEVEL = 2');
-    }
- }
-
-
-function nextAction(playerID, gameState){
-    if(curHighPlan_Robot_level0.length===0 && curLowPlan.length ===0) return;
-
-    if(curLowPlan.length === 0){
-
-        if (robot_bfs_level === 0){
-            curLowPlan = bfs_level0(playerID, gameState, tar_loc = findLocation(curHighPlan_Robot_level0[0], gameState.map), undefined);
-        }
-        else if (robot_bfs_level === 1){
-            curLowPlan = bfs_level1(playerID, "1", gameState, undefined, undefined, curHighPlan_Robot_level1, curHighPlan_Human_level1);
-        }
-        else if (robot_bfs_level === 2){
-            curLowPlan = bfs_level2(playerID, "1", gameState, curHighPlan_Robot_level2, curHighPlan_Human_level2, curHighPlan_Robot_level1, curHighPlan_Human_level1);
-        }
-        
-        if(curLowPlan.length != 0){
-            curLowPlan.push("interact");
-            if (robot_bfs_level === 0){
-                curHighPlan_Robot_level0.shift();
-            }
-        }
-    }
-    
-    const next_action = curLowPlan.shift();
-
-    executeAction(playerID, gameState, next_action);
 }
 
 
