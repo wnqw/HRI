@@ -447,6 +447,11 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
             console.log("action case 2: " + action);
             return [action, nearest_target_loc_to_player];
         }
+
+        var index = player_objIDs.indexOf(nearest_target_id_to_player);
+        if (index > -1) {
+            player_objIDs.splice(index, 1); // removes previous tar loc in list
+        }
     }
      
     else{
