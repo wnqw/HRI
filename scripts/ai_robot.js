@@ -414,7 +414,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
 
             if (!(check_if_can_interact(nearest_obj_to_other, other_instance)) && check_if_can_interact(nearest_obj_to_other, player_instance)){
                 let action = find_action_to_loc(gameState, player, nearest_target_loc_to_other);
-                // console.log("action case 1: " + action);
+                console.log("action case 1: " + action);
                 return [action, nearest_target_loc_to_other];
             }
         }
@@ -435,7 +435,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
 
         if(check_if_can_interact(nearest_obj_to_player, player_instance)){
             let action = find_action_to_loc(gameState, player, nearest_target_loc_to_player);
-            // console.log("action case 2: " + action);
+            console.log("action case 2: " + action);
             return [action, nearest_target_loc_to_player];
         }
     }
@@ -446,7 +446,7 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
         // console.log('deliver_id: ' + deliver_id);
         let deliver_loc = findLocation(deliver_id, gameState.map);
         let action = find_action_to_loc(gameState, player, deliver_loc);
-        // console.log("action case 3: " + action);
+        console.log("action case 3: " + action);
         return [action, deliver_loc];
     }
 

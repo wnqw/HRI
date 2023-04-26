@@ -38,10 +38,10 @@ function findLocation(id, map){
             if(map[i][j]===id) return([i,j]);
         }
     }
-    if (id.charAt(0) !== '@'){
-        console.error("Couldn't find the object");
-    }
-    console.log("Couldn't find the object. Might be a removed obstacle");
+    // if (id.charAt(0) !== '@'){
+    //     console.error("Couldn't find the object");
+    // }
+    console.error("Couldn't find the object. Might be a removed obstacle");
     return([]);
 }
 
