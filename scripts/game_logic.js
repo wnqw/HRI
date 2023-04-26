@@ -209,19 +209,32 @@ function movePlayer(cmd){
    //do any meaningful command will result in a movement of AI.
    if(typeof cmd !== "undefined"){
       //move AI
+      let start_time = performance.now();
       nextAction(playerID.robot, curStage);
+      let end_time = performance.now();
+      let time_taken_nextAction = end_time - start_time;
+      console.log('time_taken_nextAction: ', time_taken_nextAction + " ms");
    }
+
 
    if(checkEndGame(curStage)){
        console.log("Game Ends!!");
        clearStage();
    }
+
 }
+
+
+// log agents locs
+
+let human_loc = curStage.agents[0].loc;
+let robot_loc = curStage.agents[1].loc;
+
+console.log("human_loc: ", human_loc);
+console.log("robot_loc: ", robot_loc);
+
 
 document.addEventListener("keydown", (e) => {
    movePlayer(keys[e.key]);
-})
- 
-
- 
- 
+   console.log("human key pressed: ", keys[e.key]);
+});
