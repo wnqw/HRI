@@ -37,8 +37,16 @@ function setHighPlan(playerID, gameState){
     curHighPlan_Robot_level2.plans = gameState.all_locs;
     curHighPlan_Human_level1.plans = gameState.all_locs;
     curHighPlan_Human_level2.plans = gameState.all_locs;
+
     if (robot_bfs_level === 0){
+        console.log('ROBOT LEVEL = 0');
         console.log('initial curHighPlan_Robot_level0: ' + curHighPlan_Robot_level0);
+    }
+    else if (robot_bfs_level === 1){
+        console.log('ROBOT LEVEL = 1');
+    }
+    else if (robot_bfs_level === 2){
+        console.log('ROBOT LEVEL = 2');
     }
  }
 
