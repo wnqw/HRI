@@ -17,12 +17,12 @@ let robot_loc = [];
 let robot_curr_action = undefined;
 let human_curr_action = undefined;
 
-let start_time_robot = 0;
-let start_time_human = 0;
-let end_time_robot = 0;
-let end_time_human = 0;
-let time_taken_robot = 0;
-let time_taken_human = 0;
+// let start_time_robot = 0;
+// let start_time_human = 0;
+// let end_time_robot = 0;
+// let end_time_human = 0;
+// let time_taken_robot = 0;
+// let time_taken_human = 0;
 
 function initializeSideInfo(){
    let mapCount = document.querySelector("#mapcount");
@@ -219,20 +219,21 @@ function executeAction(playerID, stage, cmd, guiupdate = true){
    }
 }
 
+
 function movePlayer(cmd){
    executeAction(playerID.human,curStage,cmd);
 
    //do any meaningful command will result in a movement of AI.
    if(typeof cmd !== "undefined"){
       //move AI
-      start_time_robot = performance.now();
+      let start_time_robot = performance.now();
       nextAction(playerID.robot, curStage);
-      end_time_robot = performance.now();
-      time_taken_robot = end_time_robot - start_time_robot;
-      start_time_human = performance.now();
+      let end_time_robot = performance.now();
+      let time_taken_robot = end_time_robot - start_time_robot;
+      // start_time_human = performance.now();
 
-      // console.log('time_taken_nextAction: ', time_taken_nextAction + " ms");
-      // logger.log('info', time_taken_nextAction);
+      // console.log('time_taken_nextAction: ', time_taken_robot + " ms");
+      // logger.log('info', time_taken_robot);
    }
 
 
@@ -245,24 +246,24 @@ function movePlayer(cmd){
 
 // logging:
 
-human_loc = curStage.agents[0].loc;
-robot_loc = curStage.agents[1].loc;
+// human_loc = curStage.agents[0].loc;
+// robot_loc = curStage.agents[1].loc;
 
 // console.log("human_loc: ", human_loc);
 // console.log("robot_loc: ", robot_loc);
 
-robot_curr_action = curStage.agents[1].action;
-human_curr_action = curStage.agents[0].action;
+// robot_curr_action = curStage.agents[1].action;
+// human_curr_action = curStage.agents[0].action;
 // console.log("robot_curr_action: ", robot_curr_action);
 // console.log("human_curr_action: ", human_curr_action);
 
 document.addEventListener("keydown", (e) => {
    movePlayer(keys[e.key]);
-   end_time_human = performance.now();
-   time_taken_human = end_time - start_time;
+   // end_time_human = performance.now();
+   // time_taken_human = end_time - start_time;
    // console.log('time_taken_human: ', time_taken_human + " ms");
 
    // console.log("human key: ", keys[e.key]);
-   human_steps.push(keys[e.key]);
+   // human_steps.push(keys[e.key]);
    // console.log("human_steps: ", human_steps);
 });
