@@ -7,6 +7,22 @@ let totalScore = 0;
 let currentScore = 0;
 let currentStage = 0;
 
+// logging vars
+let robot_steps = [];
+let human_steps = [];
+
+let human_loc = [];
+let robot_loc = [];
+
+let robot_curr_action = undefined;
+let human_curr_action = undefined;
+
+let start_time_robot = 0;
+let start_time_human = 0;
+let end_time_robot = 0;
+let end_time_human = 0;
+let time_taken_robot = 0;
+let time_taken_human = 0;
 
 function initializeSideInfo(){
    let mapCount = document.querySelector("#mapcount");
@@ -41,7 +57,7 @@ const step = () => {
 
 function checkEndGame(stage){
    if(stage.goal === stage.collected.length) {
-      console.log(stage.collected.length);
+      console.log('stage.collected.length: ' + stage.collected.length);
       return true;
    }
    return false;
@@ -209,10 +225,12 @@ function movePlayer(cmd){
    //do any meaningful command will result in a movement of AI.
    if(typeof cmd !== "undefined"){
       //move AI
-      let start_time = performance.now();
+      start_time_robot = performance.now();
       nextAction(playerID.robot, curStage);
-      let end_time = performance.now();
-      let time_taken_nextAction = end_time - start_time;
+      end_time_robot = performance.now();
+      time_taken_robot = end_time_robot - start_time_robot;
+      start_time_human = performance.now();
+
       // console.log('time_taken_nextAction: ', time_taken_nextAction + " ms");
       // logger.log('info', time_taken_nextAction);
    }
@@ -225,17 +243,26 @@ function movePlayer(cmd){
 
 }
 
+// logging:
 
-// log agents locs
-
-let human_loc = curStage.agents[0].loc;
-let robot_loc = curStage.agents[1].loc;
+human_loc = curStage.agents[0].loc;
+robot_loc = curStage.agents[1].loc;
 
 // console.log("human_loc: ", human_loc);
 // console.log("robot_loc: ", robot_loc);
 
+robot_curr_action = curStage.agents[1].action;
+human_curr_action = curStage.agents[0].action;
+// console.log("robot_curr_action: ", robot_curr_action);
+// console.log("human_curr_action: ", human_curr_action);
 
 document.addEventListener("keydown", (e) => {
    movePlayer(keys[e.key]);
-   // console.log("human key pressed: ", keys[e.key]);
+   end_time_human = performance.now();
+   time_taken_human = end_time - start_time;
+   // console.log('time_taken_human: ', time_taken_human + " ms");
+
+   // console.log("human key: ", keys[e.key]);
+   human_steps.push(keys[e.key]);
+   // console.log("human_steps: ", human_steps);
 });

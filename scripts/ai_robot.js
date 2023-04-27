@@ -13,7 +13,7 @@ const keyToInd = {
 }
 
 // ROBOT LEVEL
-let robot_bfs_level = 1;
+let robot_bfs_level = 2;
 
 // high-level movement
 let curHighPlan_Robot_level0 = [];
@@ -31,7 +31,7 @@ let level0robot_policy = 1;
 
 const actions_list = [control.up, control.down, control.left, control.right, control.wait];
 
-// vars to log
+// logging vars
 let q_depth_level0 = 0;
 let q_depth_level1 = 0;
 let q_depth_level2 = 0;
@@ -95,6 +95,9 @@ function nextAction(playerID, gameState){
     const next_action = curLowPlan.shift();
 
     executeAction(playerID, gameState, next_action);
+
+    robot_steps.push(next_action);
+    console.log('robot number of steps: ' + robot_steps.length);
 }
 
 
