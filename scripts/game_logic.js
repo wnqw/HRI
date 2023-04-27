@@ -214,6 +214,7 @@ function movePlayer(cmd){
       let end_time = performance.now();
       let time_taken_nextAction = end_time - start_time;
       console.log('time_taken_nextAction: ', time_taken_nextAction + " ms");
+      logger.log('info', time_taken_nextAction);
    }
 
 
