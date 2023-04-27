@@ -13,7 +13,7 @@ const keyToInd = {
 }
 
 // ROBOT LEVEL
-let robot_bfs_level = 0;
+let robot_bfs_level = 1;
 
 // high-level movement
 let curHighPlan_Robot_level0 = [];
@@ -138,7 +138,7 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
             // console.log("L0 hist: " + curSearchNode.hist);
             // console.log("L0 tar_loc: " + tar_loc);
 
-            console.log('L0 q_depth_level0: ' + q_depth_level0);
+            // console.log('L0 q_depth_level0: ' + q_depth_level0);
             return(curSearchNode.hist);
         }
         
@@ -264,7 +264,7 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
                 console.log('L1 others_tar_id: ' + curSearchNode.others_tar_id);
                 console.log('L1 others_hist: ' + curSearchNode.others_hist);
                 
-                console.log('L1 q_depth_level1: ' + q_depth_level1);
+                // console.log('L1 q_depth_level1: ' + q_depth_level1);
                 return(curSearchNode.hist);
             }
         }
@@ -355,7 +355,7 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
                 console.log('L2 others_tar_id: ' + curSearchNode.others_tar_id);
                 console.log('L2 others_hist: ' + curSearchNode.others_hist);
                 
-                console.log('L2 q_depth_level2: ' + q_depth_level2);
+                // console.log('L2 q_depth_level2: ' + q_depth_level2);
                 return(curSearchNode.hist);
             }
         }
