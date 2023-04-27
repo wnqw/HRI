@@ -27,7 +27,7 @@ var curHighPlan_Human_level2 = {plans: []};
 let curLowPlan = [];
 
 // others
-let level0robot_policy = 0; 
+let level0robot_policy = 1; 
 
 const actions_list = [control.up, control.down, control.left, control.right, control.wait];
 
