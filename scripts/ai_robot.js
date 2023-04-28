@@ -13,7 +13,7 @@ const keyToInd = {
 }
 
 // ROBOT LEVEL
-let robot_bfs_level = 1;
+let robot_bfs_level = 0;
 
 // high-level movement
 let curHighPlan_Robot_level0 = [];
@@ -27,7 +27,7 @@ var curHighPlan_Human_level2 = {plans: []};
 let curLowPlan = [];
 
 // others
-let level0robot_policy = 1; 
+let level0robot_policy = 0; 
 
 const actions_list = [control.up, control.down, control.left, control.right, control.wait];
 
@@ -108,7 +108,7 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
     this agent find next state node then push it to the queue, if it hits the goal state, return the path history
     */
     console.log("L0 start");
-    // console.log('current curHighPlan_Robot_level0: ' + curHighPlan_Robot_level0);
+    console.log('current curHighPlan_Robot_level0: ' + curHighPlan_Robot_level0);
 
     if (tar_loc.length === 0){
         console.log("bfs_level0 tar_loc is []");
