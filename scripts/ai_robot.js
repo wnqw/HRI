@@ -13,7 +13,7 @@ const keyToInd = {
 }
 
 // ROBOT LEVEL
-let robot_bfs_level = 2;
+let robot_bfs_level = 1;
 
 // high-level movement
 let curHighPlan_Robot_level0 = [];
@@ -96,7 +96,9 @@ function nextAction(playerID, gameState){
 
     executeAction(playerID, gameState, next_action);
 
-    // robot_steps.push(next_action);
+    // if ((next_action != 'wait') && (next_action != 'interact')){
+    //     robot_steps.push(next_action);
+    // }
     // console.log('robot number of steps: ' + robot_steps.length);
 }
 
@@ -148,7 +150,7 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
         for(const a of actions_list){
             //Generate new state if possible
             
-            let nextNode = nextState(curSearchNode, a, agentID, gameState)
+            let nextNode = nextState(curSearchNode, a, agentID, gameState);
             //check repeat stage somehow
             if(checkDupedSimpState(q, nextNode) === false){
                 q.push(nextNode);

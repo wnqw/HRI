@@ -17,12 +17,12 @@ let robot_loc = [];
 let robot_curr_action = undefined;
 let human_curr_action = undefined;
 
-// let start_time_robot = 0;
-// let start_time_human = 0;
-// let end_time_robot = 0;
-// let end_time_human = 0;
-// let time_taken_robot = 0;
-// let time_taken_human = 0;
+let start_time_robot = 0;
+let start_time_human = 0;
+let end_time_robot = 0;
+let end_time_human = 0;
+let time_taken_robot = 0;
+let time_taken_human = 0;
 
 function initializeSideInfo(){
    let mapCount = document.querySelector("#mapcount");
@@ -226,14 +226,12 @@ function movePlayer(cmd){
    //do any meaningful command will result in a movement of AI.
    if(typeof cmd !== "undefined"){
       //move AI
-      let start_time_robot = performance.now();
-      nextAction(playerID.robot, curStage);
-      let end_time_robot = performance.now();
-      let time_taken_robot = end_time_robot - start_time_robot;
-      // start_time_human = performance.now();
 
-      // console.log('time_taken_nextAction: ', time_taken_robot + " ms");
-      // logger.log('info', time_taken_robot);
+      // let start_time_robot = performance.now();
+      nextAction(playerID.robot, curStage);
+      // let end_time_robot = performance.now();
+      // let time_taken_robot = end_time_robot - start_time_robot;
+      // console.log('time_taken_robot: ', time_taken_robot + " ms");
    }
 
 
@@ -258,12 +256,15 @@ function movePlayer(cmd){
 // console.log("human_curr_action: ", human_curr_action);
 
 document.addEventListener("keydown", (e) => {
-   movePlayer(keys[e.key]);
    // end_time_human = performance.now();
-   // time_taken_human = end_time - start_time;
+   // time_taken_human = end_time_human - start_time_human;
+   // start_time_human = performance.now();
    // console.log('time_taken_human: ', time_taken_human + " ms");
 
-   // console.log("human key: ", keys[e.key]);
-   // human_steps.push(keys[e.key]);
-   // console.log("human_steps: ", human_steps);
+   movePlayer(keys[e.key]);
+
+   // if ((keys[e.key] !== actions.wait) && (keys[e.key] !== actions.interact)) {
+   //    human_steps.push(keys[e.key]);
+   // }
+   // console.log("human number of steps: ", human_steps.length);
 });
