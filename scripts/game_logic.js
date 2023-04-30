@@ -92,7 +92,7 @@ function clearStage(){
 
    }else{
       //done
-      console.log("All stages are completed!");
+      console.log("All games are completed!");
    }
 }
 
@@ -123,7 +123,7 @@ const keys = {
     "w": directions.up,
     "s": directions.down,
     "a": directions.left,
-    "d": directions.right
+    "d": directions.right,
 }
 
 function executeAction(playerID, stage, cmd, guiupdate = true){
@@ -261,6 +261,11 @@ document.addEventListener("keydown", (e) => {
    // start_time_human = performance.now();
    // console.log('time_taken_human: ', time_taken_human + " ms");
 
+   if (e.key === "n") {
+      console.log("skip to the next map");
+      clearStage();
+      return;
+   }
    movePlayer(keys[e.key]);
 
    // if ((keys[e.key] !== actions.wait) && (keys[e.key] !== actions.interact)) {

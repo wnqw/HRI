@@ -13,7 +13,7 @@ const keyToInd = {
 }
 
 // ROBOT LEVEL
-let robot_bfs_level = 0;
+let robot_bfs_level = 1;
 
 // high-level movement
 let curHighPlan_Robot_level0 = [];
@@ -23,18 +23,13 @@ var curHighPlan_Robot_level2 = {plans: []};
 var curHighPlan_Human_level1 = {plans: []};
 var curHighPlan_Human_level2 = {plans: []};
 
-// low-level movement
+// low-level movementwaa
 let curLowPlan = [];
 
 // others
 let level0robot_policy = 0; 
-
 const actions_list = [control.up, control.down, control.left, control.right, control.wait];
-
-// logging vars
-let q_depth_level0 = 0;
-let q_depth_level1 = 0;
-let q_depth_level2 = 0;
+let maxDepth = 8;
 
 
 function setHighPlan(playerID, gameState){
@@ -108,7 +103,7 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
     this agent find next state node then push it to the queue, if it hits the goal state, return the path history
     */
     console.log("L0 start");
-    console.log('current curHighPlan_Robot_level0: ' + curHighPlan_Robot_level0);
+    // console.log('current curHighPlan_Robot_level0: ' + curHighPlan_Robot_level0);
 
     if (tar_loc.length === 0){
         console.log("bfs_level0 tar_loc is []");
@@ -134,7 +129,9 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
 
     q.push(searchNode); 
     let ind = 0;
-    while(ind < q.length){
+    let q_depth_level0 = 0;
+
+    while((ind < q.length)){
         q_depth_level0 ++;
         let curSearchNode = q[ind++];
 
@@ -256,7 +253,9 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
 
     q.push(searchNode); 
     let ind = 0;
-    while(ind < q.length){
+    let q_depth_level1 = 0;
+
+    while((ind < q.length)){
         q_depth_level1 ++;
         let curSearchNode = q[ind++];
 
@@ -346,10 +345,13 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
 
     q.push(searchNode); 
     let ind = 0;
+    let q_depth_level2 = 0;
+
+
+    // while((ind < q.length) && (q_depth_level2 < 8)){
     while(ind < q.length){
         q_depth_level2 ++;
-
-         let curSearchNode = q[ind++];
+        let curSearchNode = q[ind++];
 
          if(curSearchNode.tar_loc != undefined){
             if(checkGoalLocation(curSearchNode.agents[player_ind], curSearchNode.tar_loc)){
@@ -360,7 +362,7 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
                 console.log('L2 others_tar_id: ' + curSearchNode.others_tar_id);
                 console.log('L2 others_hist: ' + curSearchNode.others_hist);
                 
-                // console.log('L2 q_depth_level2: ' + q_depth_level2);
+                console.log('L2 q_depth_level2: ' + q_depth_level2);
                 return(curSearchNode.hist);
             }
         }

@@ -31,7 +31,6 @@ const control = {
     wait: "wait"
 }
 
-
 class Player{
 
     id;   //unique id (player# or ai#)
