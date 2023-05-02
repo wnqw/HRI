@@ -13,7 +13,7 @@ const keyToInd = {
 }
 
 // ROBOT LEVEL
-let robot_bfs_level = 1;
+let robot_bfs_level = 2;
 
 // high-level movement
 let curHighPlan_Robot_level0 = [];
@@ -29,7 +29,7 @@ let curLowPlan = [];
 // others
 let level0robot_policy = 0; 
 const actions_list = [control.up, control.down, control.left, control.right, control.wait];
-let maxDepth = 8;
+let maxDepth = 10;
 
 
 function setHighPlan(playerID, gameState){
@@ -268,7 +268,7 @@ function bfs_level1(agentID, otherID, gameState, searchNode, tar_loc, player_obj
                 console.log('L1 others_tar_id: ' + curSearchNode.others_tar_id);
                 console.log('L1 others_hist: ' + curSearchNode.others_hist);
                 
-                // console.log('L1 q_depth_level1: ' + q_depth_level1);
+                console.log('L1 q_depth_level1: ' + q_depth_level1);
                 return(curSearchNode.hist);
             }
         }
@@ -348,8 +348,8 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
     let q_depth_level2 = 0;
 
 
-    // while((ind < q.length) && (q_depth_level2 < 8)){
-    while(ind < q.length){
+    while((ind < q.length) && (q_depth_level2 < maxDepth)){
+    // while(ind < q.length){
         q_depth_level2 ++;
         let curSearchNode = q[ind++];
 
@@ -405,7 +405,7 @@ function bfs_level2(agentID, otherID, gameState, player_objIDs, other_objIDs, pl
             }
         }
     }    
-
+    // console.log('q_depth_level2: ' + q_depth_level2);
     console.log("L2 Not Found");
     return([]);
 }
