@@ -3,7 +3,8 @@ const dirToMovement = {
     down: [1, 0],
     left: [0, -1],
     right: [0, 1],
-    wait: [0, 0]
+    wait: [0, 0],
+    interact: [0, 0]
 }
 const keyToInd = {
     id: 0,
@@ -13,7 +14,7 @@ const keyToInd = {
 }
 
 // ROBOT LEVEL
-let robot_bfs_level = 2;
+let robot_bfs_level = 1; // 0,1,2
 
 // high-level movement
 let curHighPlan_Robot_level0 = [];
@@ -28,7 +29,7 @@ let curLowPlan = [];
 
 // others
 let level0robot_policy = 0; 
-const actions_list = [control.up, control.down, control.left, control.right, control.wait];
+const actions_list = [control.up, control.down, control.left, control.right, control.wait, control.interact];
 let maxDepth = 10;
 
 
@@ -137,10 +138,11 @@ function bfs_level0(agentID, gameState, tar_loc, searchNode){
 
         if(checkGoalLocation(curSearchNode.agents[player_ind], tar_loc) ){
             console.log("L0 found");
-            // console.log("L0 hist: " + curSearchNode.hist);
-            // console.log("L0 tar_loc: " + tar_loc);
+            console.log("L0 hist: " + curSearchNode.hist);
+            let tar_id = gameState.map[tar_loc[0]][tar_loc[1]];
+            console.log("L0 tar_id: " + tar_id);
 
-            // console.log('L0 q_depth_level0: ' + q_depth_level0);
+            console.log('L0 q_depth_level0: ' + q_depth_level0);
             return(curSearchNode.hist);
         }
         

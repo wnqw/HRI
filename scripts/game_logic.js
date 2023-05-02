@@ -56,7 +56,7 @@ const step = () => {
  }
 
 function checkEndGame(stage){
-   if(stage.goal === stage.collected.length) {
+   if(stage.goal <= stage.collected.length) {
       console.log('stage.collected.length: ' + stage.collected.length);
       return true;
    }
