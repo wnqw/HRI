@@ -205,7 +205,7 @@ function executeAction(playerID, stage, cmd, guiupdate = true){
             if(guiupdate){
                currentScore += temp_player.rewards[front.type];
                let currentScoreText = document.querySelector("#current-score");
-               currentScoreText.innerHTML = "<b>Current Score</b>: " + currentScore;
+               // currentScoreText.innerHTML = "<b>Current Score</b>: " + currentScore;
                let currentCollectedText = document.querySelector("#collected");
                currentCollectedText.innerHTML = "<b>Collected Object</b>:" + stage.collected.length;
             }

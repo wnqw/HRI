@@ -14,7 +14,13 @@ const keyToInd = {
 }
 
 // ROBOT LEVEL
-let robot_bfs_level = 0; // 0,1,2
+// let robot_bfs_level = 0; // 0,1,2
+let robot_bfs_level = undefined;
+
+let input_level = prompt("Enter the robot's level: ");
+if (input_level === "0") robot_bfs_level = 0;
+else if (input_level === "1") robot_bfs_level = 1;
+else if (input_level === "2") robot_bfs_level = 2;
 
 // high-level movement
 let curHighPlan_Robot_level0 = [];
