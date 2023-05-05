@@ -227,7 +227,7 @@ const pi_training2 = {
 }
 const opt_pi_human_training2 = {
     // "0":["@:1:1","a:1:1","A1","a:1:1","A1"]
-    "0":["@:1:1","a:1:8","A1","a:1:8","A1"]
+    "0":["@:1:1","a:1:8","A1"]
 }
 // const all_locs_training2 = ["@:1:1","@:2:2","a:1:1", "b:2:2"];
 const all_locs_training2 = ["@:1:1","@:2:2","a:1:8", "b:2:2"];
@@ -307,7 +307,7 @@ const pi_training4 = {
 }
 const opt_pi_human_training4 = {
     // "0":["@:1:1","a:1:1","A1","a:1:1","A1"]
-    "0":["@:1:1","a:1:8","A1","a:1:8","A1"]
+    "0":["@:1:1","a:1:8","A1"]
 }
 
 // const all_locs_training4 = ["@:1:1","@:2:2","a:1:1", "b:2:2"];
@@ -382,7 +382,7 @@ const pi_training6 = {
     "0":["@:2:2","d:2:2","D1","d:2:2","D1"]
 }
 const opt_pi_human_training6 = {
-    "0":["@:1:1","b:1:1","B1","b:1:1","B1"]
+    "0":["@:1:1","b:1:1","B1"]
 }
 const all_locs_training6 = ["@:1:1","@:2:2"," b:1:1", "d:2:2"];
 const all_deliver_places_training6 = ["B1","D1"];
@@ -445,7 +445,7 @@ const pi_training8 = {
     "0":["@:2:2","d:8:2","D1","d:8:2","D1"]
 }
 const opt_pi_human_training8 = {
-    "0":["@:1:1","a:1:1","A1","a:1:1","A1"]
+    "0":["@:1:1","a:1:1","A1"]
 }
 
 // const all_locs_training8 = ["a:1:1", "d:2:2", "@:1:1", "@:2:2"];
@@ -528,7 +528,7 @@ const pi_testing2 = {
 }
 const opt_pi_human_testing2 = {
     // "0":["@:1:1","a:1:1","A1","a:1:1","A1"]
-    "0":["@:1:1","a:1:8","A1","a:1:8","A1"]
+    "0":["@:1:1","a:1:8","A1"]
 }
 
 // const all_locs_testing2 = ["@:1:1", "@:2:2","a:1:1", "b:2:2"];
@@ -607,7 +607,7 @@ const pi_testing4 = {
 }
 const opt_pi_human_testing4 = {
     // "0":["@:1:1","a:1:1","A1","a:1:1","A1"]
-    "0":["@:1:1","a:1:8","A1","a:1:8","A1"]
+    "0":["@:1:1","a:1:8","A1"]
 }
 // const all_locs_testing4 =  ["@:1:1","@:2:2","a:1:1", "b:2:2"];
 const all_locs_testing4 =  ["@:1:1","@:2:2","a:1:8", "b:2:2"];
@@ -680,7 +680,7 @@ const pi_testing6 = {
     "0":["@:2:2","d:2:2","D1","d:2:2","D1"]
 }
 const opt_pi_human_testing6 = {
-    "0":["@:1:1","b:1:1","B1","b:1:1","B1"]
+    "0":["@:1:1","b:1:1","B1"]
 }
 
 const all_locs_testing6 = ["@:1:1","@:2:2", " b:1:1", "d:2:2"];
@@ -755,7 +755,7 @@ const pi_testing8 = {
     "0":["@:2:2","d:8:2","D1","d:8:2","D1"]
 }
 const opt_pi_human_testing8 = {
-    "0":["@:1:1","a:1:1","A1","a:1:1","A1"]
+    "0":["@:1:1","a:1:1","A1"]
 }
 
 // const all_locs_testing8 = ["a:1:1", "d:2:2", "@:1:1", "@:2:2"];
