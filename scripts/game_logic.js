@@ -37,8 +37,8 @@ function initializeSideInfo(){
    strStat.innerText = "Str = " + curStage.agents[0].str;
    dexStat.innerText = "Dex = " + curStage.agents[0].dex;
    mapCount.innerHTML = "<b>Map</b>: " + (currentStage+1) + "/" + stages.length;
-   totalScoreText.innerHTML = "<b>Total Score</b>: " + totalScore;
-   currentScoreText.innerHTML = "<b>Current Score</b>: " + currentScore;
+   // totalScoreText.innerHTML = "<b>Total Score</b>: " + totalScore;
+   // currentScoreText.innerHTML = "<b>Current Score</b>: " + currentScore;
    if(curStage.goal === 1){
       objectiveText.innerHTML = "<b>Objective</b>: Collect " + curStage.goal + " object";
    }else{

@@ -14,7 +14,7 @@ const keyToInd = {
 }
 
 // ROBOT LEVEL
-let robot_bfs_level = 1; // 0,1,2
+let robot_bfs_level = 0; // 0,1,2
 
 // high-level movement
 let curHighPlan_Robot_level0 = [];
