@@ -237,7 +237,7 @@ function movePlayer(cmd){
 
    if(checkEndGame(curStage)){
        console.log("Game Ends!!");
-       console.log('currentStage ends: ', currentStage);
+      //  console.log('currentStage ends: ', currentStage);
        clearStage();
    }
 
