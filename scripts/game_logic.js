@@ -237,25 +237,30 @@ function movePlayer(cmd){
 
    if(checkEndGame(curStage)){
        console.log("Game Ends!!");
+       console.log('currentStage ends: ', currentStage);
        clearStage();
    }
 
 }
 
-// logging:
-
-// human_loc = curStage.agents[0].loc;
-// robot_loc = curStage.agents[1].loc;
-
-// console.log("human_loc: ", human_loc);
-// console.log("robot_loc: ", robot_loc);
-
-// robot_curr_action = curStage.agents[1].action;
-// human_curr_action = curStage.agents[0].action;
-// console.log("robot_curr_action: ", robot_curr_action);
-// console.log("human_curr_action: ", human_curr_action);
+// some of the logging:
 
 document.addEventListener("keydown", (e) => {
+
+   // if (curStage.agents[1] != undefined){
+   //    robot_loc = curStage.agents[1].loc;
+   // }
+   // human_loc = curStage.agents[0].loc;
+   // console.log("robot_loc: ", robot_loc);
+   // console.log("human_loc: ", human_loc);
+    
+   // if (curStage.agents[1] != undefined){
+   //    robot_curr_action = curStage.agents[1].action;
+   // }
+   // human_curr_action = curStage.agents[0].action;
+   // console.log("robot_curr_action: ", robot_curr_action);
+   // console.log("human_curr_action: ", human_curr_action);
+
    // end_time_human = performance.now();
    // time_taken_human = end_time_human - start_time_human;
    // start_time_human = performance.now();

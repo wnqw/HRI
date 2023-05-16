@@ -14,13 +14,12 @@ const keyToInd = {
 }
 
 // ROBOT LEVEL
-// let robot_bfs_level = 0; // 0,1,2
-let robot_bfs_level = undefined;
-
-let input_level = prompt("Enter the robot's level: ");
-if (input_level === "0") robot_bfs_level = 0;
-else if (input_level === "1") robot_bfs_level = 1;
-else if (input_level === "2") robot_bfs_level = 2;
+let robot_bfs_level = 1; // 0,1,2
+// let robot_bfs_level = undefined;
+// let input_level = prompt("Enter the robot's level: ");
+// if (input_level === "0") robot_bfs_level = 0;
+// else if (input_level === "1") robot_bfs_level = 1;
+// else if (input_level === "2") robot_bfs_level = 2;
 
 // high-level movement
 let curHighPlan_Robot_level0 = [];
@@ -57,14 +56,14 @@ function setHighPlan(playerID, gameState){
     curHighPlan_Human_level2.plans = gameState.all_locs;
 
     if (robot_bfs_level === 0){
-        console.log('ROBOT LEVEL = 0');
+        console.log('ROBOT LEVEL = ' + robot_bfs_level);
         console.log('initial curHighPlan_Robot_level0: ' + curHighPlan_Robot_level0);
     }
     else if (robot_bfs_level === 1){
-        console.log('ROBOT LEVEL = 1');
+        console.log('ROBOT LEVEL = ' + robot_bfs_level);
     }
     else if (robot_bfs_level === 2){
-        console.log('ROBOT LEVEL = 2');
+        console.log('ROBOT LEVEL = ' + robot_bfs_level);
     }
  }
 
