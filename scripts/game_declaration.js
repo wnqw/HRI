@@ -801,7 +801,7 @@ const training_stages = [stage_training1, stage_training2, stage_training3, stag
 const testing_stages = [stage_testing1,stage_testing2,stage_testing3,stage_testing4,stage_testing5,
                             stage_testing6,stage_testing7, stage_testing8];
 
-// let stages = [...tutorial_stages, ...training_stages, ...testing_stages];
+let stages = [...tutorial_stages, ...training_stages, ...testing_stages];
 
-let stages = [stage_testing8];
+// let stages = [stage_testing8];
  
