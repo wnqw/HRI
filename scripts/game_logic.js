@@ -40,7 +40,7 @@ function initializeSideInfo(){
    }
    currentCollectedText.innerHTML = "<b>Collected Object</b>:" + curStage.collected.length;
 
-   let completion_code = 'vjehp';
+   let completion_code = 'CGKPJHBT';
    let completionCode = document.querySelector("#completioncode");
    if (currentStage === stages.length){
       completionCode.innerHTML = "<b>Completion Code</b>: " + completion_code;
