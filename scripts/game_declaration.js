@@ -80,7 +80,7 @@ let reward = {"a": 5, "b":10, "c":15, "d":20}
 
 let player1 = new Player(id = playerID.human, type = "player", color ="yellow", str = 5, dex = 8, // 5, 9
     rewards = reward);
-let robot1 = new Player(id = playerID.robot, type = "robot", color = "greenu", str = 8, dex = 5, // 8, 4
+let robot1 = new Player(id = playerID.robot, type = "robot", color = "green", str = 8, dex = 5, // 8, 4
     rewards = reward, level = "0.5");
 
 
