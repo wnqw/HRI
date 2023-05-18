@@ -20,5 +20,5 @@ function goalDeliverb1(searchState){
 }
 
 function testFunction(){
-    // console.log("working!");
+    console.log("working!");
 }
