@@ -14,7 +14,6 @@ let human_steps = [];
 let human_loc = [];
 let robot_loc = [];
 
-let robot_curr_action = undefined;
 let human_curr_action = undefined;
 
 let start_time_robot = 0;
@@ -57,7 +56,7 @@ const step = () => {
 
 function checkEndGame(stage){
    if(stage.goal <= stage.collected.length) {
-      console.log('stage.collected.length: ' + stage.collected.length);
+      console.log('Object(s) collected: ' + stage.collected.length);
       return true;
    }
    return false;
@@ -94,6 +93,8 @@ function clearStage(){
       //done
       console.log("All games are completed!");
    }
+   robot_steps = [];
+   human_steps = [];
 }
 
 function startGame(stages){
@@ -223,58 +224,53 @@ function executeAction(playerID, stage, cmd, guiupdate = true){
 function movePlayer(cmd){
    executeAction(playerID.human,curStage,cmd);
 
-   //do any meaningful command will result in a movement of AI.
-   if(typeof cmd !== "undefined"){
-      //move AI
-
-      // let start_time_robot = performance.now();
-      nextAction(playerID.robot, curStage);
-      // let end_time_robot = performance.now();
-      // let time_taken_robot = end_time_robot - start_time_robot;
-      // console.log('time_taken_robot: ', time_taken_robot + " ms");
+   if (curStage.agents[1] != undefined){
+      if(typeof cmd !== "undefined"){
+         //move AI
+         start_time_robot = performance.now();
+         nextAction(playerID.robot, curStage);
+         end_time_robot = performance.now();
+         time_taken_robot = end_time_robot - start_time_robot;
+         console.log('time_taken_robot: ', time_taken_robot + " ms");
+      }
    }
-
-
    if(checkEndGame(curStage)){
-       console.log("Game Ends!!");
-      //  console.log('currentStage ends: ', currentStage);
-       clearStage();
+      console.log("Game Ends!!");
+      console.log('Finished map: ', currentStage + 1);
+      clearStage();
    }
 
 }
 
-// some of the logging:
-
 document.addEventListener("keydown", (e) => {
+   // human time taken
+   end_time_human = performance.now();
+   time_taken_human = end_time_human - start_time_human;
+   start_time_human = performance.now();
+   console.log('time_taken_human: ', time_taken_human + " ms");
 
-   // if (curStage.agents[1] != undefined){
-   //    robot_loc = curStage.agents[1].loc;
-   // }
-   // human_loc = curStage.agents[0].loc;
-   // console.log("robot_loc: ", robot_loc);
-   // console.log("human_loc: ", human_loc);
-    
-   // if (curStage.agents[1] != undefined){
-   //    robot_curr_action = curStage.agents[1].action;
-   // }
-   // human_curr_action = curStage.agents[0].action;
-   // console.log("robot_curr_action: ", robot_curr_action);
-   // console.log("human_curr_action: ", human_curr_action);
+   movePlayer(keys[e.key]);
 
-   // end_time_human = performance.now();
-   // time_taken_human = end_time_human - start_time_human;
-   // start_time_human = performance.now();
-   // console.log('time_taken_human: ', time_taken_human + " ms");
+   // location 
+   if (curStage.agents[1] != undefined){
+      robot_loc = curStage.agents[1].loc;
+      console.log("robot_loc: ", robot_loc);
+   }
+   human_loc = curStage.agents[0].loc;
+   console.log("human_loc: ", human_loc);
+
+   // human action
+   console.log("human_curr_action: ", keys[e.key]);
+
+   // human number of actions
+   human_steps.push(keys[e.key]);
+   console.log("human number of actions: ", human_steps.length);
 
    if (e.key === "n") {
       console.log("skip to the next map");
       clearStage();
       return;
    }
-   movePlayer(keys[e.key]);
-
-   // if ((keys[e.key] !== actions.wait) && (keys[e.key] !== actions.interact)) {
-   //    human_steps.push(keys[e.key]);
-   // }
-   // console.log("human number of steps: ", human_steps.length);
+   
+    
 });

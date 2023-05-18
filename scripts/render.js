@@ -199,7 +199,6 @@ function renderMapLocation(ctx, x, y, obj){
     ctx.fillRect(grid_size*y, grid_size*x, grid_size-1, grid_size-1);
 
     if(obj instanceof GameObject ){
-        //console.log(obj);
         renderObject(ctx, x, y, obj);
     } else if(obj instanceof Player) {
         renderPlayer(ctx, x, y, obj);
