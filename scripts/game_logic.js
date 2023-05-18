@@ -27,23 +27,24 @@ function initializeSideInfo(){
    let mapCount = document.querySelector("#mapcount");
    let strStat  = document.querySelector("#strstat");
    let dexStat  = document.querySelector("#dexstat");
-   let totalScoreText = document.querySelector("#total-score");
-   let currentScoreText = document.querySelector("#current-score");
    let objectiveText = document.querySelector("#objective");
    let currentCollectedText = document.querySelector("#collected");
-
 
    strStat.innerText = "Str = " + curStage.agents[0].str;
    dexStat.innerText = "Dex = " + curStage.agents[0].dex;
    mapCount.innerHTML = "<b>Map</b>: " + (currentStage+1) + "/" + stages.length;
-   // totalScoreText.innerHTML = "<b>Total Score</b>: " + totalScore;
-   // currentScoreText.innerHTML = "<b>Current Score</b>: " + currentScore;
    if(curStage.goal === 1){
       objectiveText.innerHTML = "<b>Objective</b>: Collect " + curStage.goal + " object";
    }else{
       objectiveText.innerHTML = "<b>Objective</b>: Collect " + curStage.goal + " objects";
    }
    currentCollectedText.innerHTML = "<b>Collected Object</b>:" + curStage.collected.length;
+
+   let completion_code = 'vjehp';
+   let completionCode = document.querySelector("#completioncode");
+   if (currentStage === stages.length){
+      completionCode.innerHTML = "<b>Completion Code</b>: " + completion_code;
+   }
 }
 
 //Set up the game loop
@@ -92,6 +93,8 @@ function clearStage(){
    }else{
       //done
       console.log("All games are completed!");
+      // completion code
+      initializeSideInfo();  
    }
    robot_steps = [];
    human_steps = [];
