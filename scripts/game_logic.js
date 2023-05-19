@@ -40,11 +40,11 @@ function initializeSideInfo(){
    }
    currentCollectedText.innerHTML = "<b>Collected Object</b>:" + curStage.collected.length;
 
-   let completion_code = 'CGKPJHBT';
-   let completionCode = document.querySelector("#completioncode");
-   if (currentStage === stages.length){
-      completionCode.innerHTML = "<b>Completion Code</b>: " + completion_code;
-   }
+   // let completion_code = 'CGKPJHBT';
+   // let completionCode = document.querySelector("#completioncode");
+   // if (currentStage === stages.length){
+   //    completionCode.innerHTML = "<b>Completion Code</b>: " + completion_code;
+   // }
 }
 
 //Set up the game loop
@@ -77,11 +77,10 @@ function resetPlayers(stage){
 }
 
 function clearStage(){
-   //Display Clear Message and reset or stop
    console.log("Setting the stage to the next stage...");
-   //Move to the next stage if possible
-   currentStage +=1;
-   if(currentStage < stages.length){
+
+   if(currentStage + 1 < stages.length){
+      currentStage +=1;
       curStage = stages[currentStage];
 
       totalScore += currentScore;
@@ -94,7 +93,7 @@ function clearStage(){
       //done
       console.log("All games are completed!");
       // completion code
-      initializeSideInfo();  
+      // initializeSideInfo();  
    }
    robot_steps = [];
    human_steps = [];
