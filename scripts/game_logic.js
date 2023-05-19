@@ -92,6 +92,9 @@ function clearStage(){
    }else{
       //done
       console.log("All games are completed!");
+      window.alert("You have completed the experiment. Please return to Qualtrics to complete the survey.")
+      window.close();
+
       // completion code
       // initializeSideInfo();  
    }
