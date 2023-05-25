@@ -802,6 +802,6 @@ const testing_stages = [stage_testing1,stage_testing2,stage_testing3,stage_testi
                             stage_testing6,stage_testing7, stage_testing8];
 
 let stages = [...tutorial_stages, ...training_stages, ...testing_stages];
-
+ 
 // let stages = [stage_template1];
  
