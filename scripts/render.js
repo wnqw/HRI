@@ -38,9 +38,6 @@ function findLocation(id, map){
             if(map[i][j]===id) return([i,j]);
         }
     }
-    // if (id.charAt(0) !== '@'){
-    //     console.error("Couldn't find the object");
-    // }
     console.error("Couldn't find the object. Might be a removed obstacle");
     return([]);
 }
@@ -206,6 +203,7 @@ function renderMapLocation(ctx, x, y, obj){
         ctx.fillStyle = tileColor.wall;
         ctx.fillRect(grid_size*y, grid_size*x,grid_size-1,grid_size-1);
     } else if(obj instanceof Location) {
+        // console.log("rendering location");
         ctx.fillStyle = obj.color;
         ctx.fillRect(grid_size*y, grid_size*x, grid_size-1,grid_size-1);
     } else if(obj == " "){

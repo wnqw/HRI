@@ -30,15 +30,15 @@ function initializeSideInfo(){
    let objectiveText = document.querySelector("#objective");
    let currentCollectedText = document.querySelector("#collected");
 
-   strStat.innerText = "Str = " + curStage.agents[0].str;
-   dexStat.innerText = "Dex = " + curStage.agents[0].dex;
+   strStat.innerText = "Strength = " + curStage.agents[0].str;
+   dexStat.innerText = "Dexterity = " + curStage.agents[0].dex;
    mapCount.innerHTML = "<b>Map</b>: " + (currentStage+1) + "/" + stages.length;
    if(curStage.goal === 1){
-      objectiveText.innerHTML = "<b>Objective</b>: Collect " + curStage.goal + " object";
+      objectiveText.innerHTML = "<b>Objective</b>: Deliver " + curStage.goal + " object";
    }else{
-      objectiveText.innerHTML = "<b>Objective</b>: Collect " + curStage.goal + " objects";
+      objectiveText.innerHTML = "<b>Objective</b>: Deliver " + curStage.goal + " objects";
    }
-   currentCollectedText.innerHTML = "<b>Collected Object</b>:" + curStage.collected.length;
+   currentCollectedText.innerHTML = "<b>Delivered Object(s)</b>:" + curStage.collected.length;
 
    // let completion_code = 'CGKPJHBT';
    // let completionCode = document.querySelector("#completioncode");
@@ -57,7 +57,7 @@ const step = () => {
 
 function checkEndGame(stage){
    if(stage.goal <= stage.collected.length) {
-      console.log('Object(s) collected: ' + stage.collected.length);
+      console.log('Object(s) delivered: ' + stage.collected.length);
       return true;
    }
    return false;
@@ -92,8 +92,8 @@ function clearStage(){
    }else{
       //done
       console.log("All games are completed!");
-      window.alert("You have completed the experiment. Please return to Qualtrics survey tab to complete the survey.")
-      window.close();
+      // window.alert("You have completed the experiment. Please return to Qualtrics survey tab to complete the survey.")
+      // window.close();
 
       // completion code
       // initializeSideInfo();  
@@ -213,7 +213,7 @@ function executeAction(playerID, stage, cmd, guiupdate = true){
                let currentScoreText = document.querySelector("#current-score");
                // currentScoreText.innerHTML = "<b>Current Score</b>: " + currentScore;
                let currentCollectedText = document.querySelector("#collected");
-               currentCollectedText.innerHTML = "<b>Collected Object</b>:" + stage.collected.length;
+               currentCollectedText.innerHTML = "<b>Delivered Object(s)</b>:" + stage.collected.length;
             }
          }
          else if(front instanceof Object && front.type === temp_player.hold_object.type && temp_player.hold_object.id === front.id){
@@ -270,6 +270,9 @@ document.addEventListener("keydown", (e) => {
    // human number of actions
    human_steps.push(keys[e.key]);
    console.log("human number of actions: ", human_steps.length);
+
+   // let human_instance = findAgentfromID(curStage, playerID.human);
+   // human_instance.action_input = keys[e.key];
 
    if (e.key === "n") {
       console.log("skip to the next map");

@@ -175,8 +175,8 @@ let stage_tutorial2 = new GameState(map_tutorial2, [player1], loc_list, goal= 1,
 let map_training1 =     [["#","#","#","#"  ,"#","#","#","#"  ,"#","#","#"],
                          ["#",".",".","a:1:1",".",".",".","b:2:2",".",".","#"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
-                         ["A1",".",".","."  ,".",".",".","."  ,".",".","B1"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+                         ["A1",".",".","."  ,".",".",".","."  ,".",".","B1"],
                          ["#",".",".","1"  ,".",".",".","2"  ,".",".","#"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
@@ -210,11 +210,12 @@ let stage_training1 = new GameState(map_training1, player_list, loc_list, goal= 
 //                          ["#","A1","#","#","B1","#","B2","#","#","A2","#"]];
 
 
+
 let map_training2 =     [["#","#","#","#"  ,"#","#","#","#"  ,"#","#","#"],
                          ["#",".",".","a:1:8",".",".",".","b:2:2",".",".","#"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+                         ["#",".",".",".","."  ,".",".",".","."  ,".","#"],
                          ["A1","@:1:1",".","."  ,".",".",".","."  ,".","@:2:2","B1"],
-                         ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
                          ["#",".",".","1"  ,".",".",".","2"  ,".",".","#"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
@@ -229,7 +230,6 @@ const opt_pi_human_training2 = {
     // "0":["@:1:1","a:1:1","A1","a:1:1","A1"]
     "0":["@:1:1","a:1:8","A1"]
 }
-// const all_locs_training2 = ["@:1:1","@:2:2","a:1:1", "b:2:2"];
 const all_locs_training2 = ["@:1:1","@:2:2","a:1:8", "b:2:2"];
 const all_deliver_places_training2 = ["A1", "B1"];
 
@@ -471,8 +471,8 @@ let stage_training8 = new GameState(map_training8, player_list, loc_list, goal= 
 let map_testing1 =     [["#","#","#","#"  ,"#","#","#","#"  ,"#","#","#"],
                          ["#",".",".","A1",".",".",".","B1",".",".","#"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
-                         ["a:1:1",".",".","."  ,".",".",".","."  ,".",".","b:2:2"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+                         ["a:1:1",".",".","."  ,".",".",".","."  ,".",".","b:2:2"],
                          ["#",".",".","1"  ,".",".",".","2"  ,".",".","#"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
@@ -512,8 +512,8 @@ let stage_testing1 = new GameState(map_testing1,  player_list, loc_list, goal= 1
 let map_testing2 =     [["#","#","#","#"  ,"#","#","#","#"  ,"#","#","#"],
                          ["#",".",".","A1",".",".",".","B1",".",".","#"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
-                         ["a:1:8","@:1:1",".","."  ,".",".",".","."  ,".","@:2:2","b:2:2"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+                         ["a:1:8","@:1:1",".",".",".",".",".","."  ,".","@:2:2","b:2:2"],
                          ["#",".",".","1"  ,".",".",".","2"  ,".",".","#"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
@@ -762,17 +762,29 @@ let stage_testing8 = new GameState(map_testing8, player_list, loc_list, goal= 2,
                                     policy = pi_testing8, all_locs = all_locs_testing8, all_deliver_places=all_deliver_places_testing8);
 
 // map templates
-let map_template_1 =     [["#","#","#","#"  ,"#","#","#","#"  ,"#","#","#"],
-                         ["#",".",".","a:1:1",".",".",".","b:2:2",".",".","#"],
-                         ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
-                         ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
-                         ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
-                         ["#",".",".","1"  ,".",".",".","2"  ,".",".","#"],
-                         ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
-                         ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
-                         ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
-                         ["#",".",".","@:1:1"  ,".",".",".","@:2:2"  ,".",".","#"],
-                         ["#","#","#","A1" ,"#","#","#","B1" ,"#","#","#"]];
+// let map_template_1 =     [["#","#","#","#"  ,"#","#","#","#"  ,"#","#","#"],
+//                          ["#",".",".","a:1:1",".",".",".","b:2:2",".",".","#"],
+//                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+//                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+//                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+//                          ["#",".",".","1"  ,".",".",".","2"  ,".",".","#"],
+//                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+//                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+//                          ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+//                          ["#",".",".","@:1:1"  ,".",".",".","@:2:2"  ,".",".","#"],
+//                          ["#","#","#","A1" ,"#","#","#","B1" ,"#","#","#"]];
+
+
+let map_template_1 =     [["#","#","#","#"  ,"#","#","#", "#", "#"],
+                         ["#",".","a:1:1","."  ,".",".","b:2:2",".","#"],    
+                         ["#",".",".","."  ,".",".",".",".","#"],
+                         ["#",".",".","."  ,".",".",".",".","#"], 
+                         ["#",".","1","."  ,".",".","2",".","#"],
+                         ["#",".",".","."  ,".",".",".",".","#"],
+                         ["#",".",".","."  ,".",".",".",".","#"],
+                         ["#",".","@:1:1","."  ,".",".","@:2:2",".","#"],
+                         ["#","#","A1","#"  ,"#","#","B1", "#", "#"]];
+
 
 const pi_template1 = {
     0:[],
@@ -789,19 +801,22 @@ let stage_template1 = new GameState(map_template_1, player_list, loc_list, goal=
 
 
 
-
 //TODO: function to check that the gameStage and all declaration is valid. 
 //      This includes checking unique id of obj.
 
 
 // the list of all states in order to appear in the experiment
-const tutorial_stages = [stage_tutorial1, stage_tutorial2];
-const training_stages = [stage_training1, stage_training2, stage_training3, stage_training4, stage_training5,
-                         stage_training6, stage_training7, stage_training8];
-const testing_stages = [stage_testing1,stage_testing2,stage_testing3,stage_testing4,stage_testing5,
-                            stage_testing6,stage_testing7, stage_testing8];
+// const tutorial_stages = [stage_tutorial1, stage_tutorial2];
+// const training_stages = [stage_training1, stage_training2, stage_training3, stage_training4, stage_training5,
+//     stage_training6, stage_training7, stage_training8];
+// const testing_stages = [stage_testing1,stage_testing2,stage_testing3,stage_testing4,stage_testing5,
+//        stage_testing6,stage_testing7, stage_testing8];
 
-let stages = [...tutorial_stages, ...training_stages, ...testing_stages];
+const tutorial_stages = [stage_tutorial1, stage_tutorial2];
+const training_stages = [stage_training1, stage_training2, stage_training7, stage_training8];
+const testing_stages = [stage_testing1,stage_testing2, stage_testing7, stage_testing8];
+
+// let stages = [...tutorial_stages, ...training_stages, ...testing_stages];
  
-// let stages = [stage_template1];
+let stages = [stage_training1];
  
