@@ -805,7 +805,6 @@ let stage_template1 = new GameState(map_template_1, player_list, loc_list, goal=
 //      This includes checking unique id of obj.
 
 
-// the list of all states in order to appear in the experiment
 // const tutorial_stages = [stage_tutorial1, stage_tutorial2];
 // const training_stages = [stage_training1, stage_training2, stage_training3, stage_training4, stage_training5,
 //     stage_training6, stage_training7, stage_training8];
@@ -816,7 +815,7 @@ const tutorial_stages = [stage_tutorial1, stage_tutorial2];
 const training_stages = [stage_training1, stage_training2, stage_training7, stage_training8];
 const testing_stages = [stage_testing1,stage_testing2, stage_testing7, stage_testing8];
 
-// let stages = [...tutorial_stages, ...training_stages, ...testing_stages];
+let stages = [...tutorial_stages, ...training_stages, ...testing_stages];
  
-let stages = [stage_training1];
+// let stages = [stage_training1];
  
