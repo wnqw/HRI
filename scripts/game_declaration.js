@@ -233,8 +233,37 @@ const opt_pi_human_training2 = {
 const all_locs_training2 = ["@:1:1","@:2:2","a:1:8", "b:2:2"];
 const all_deliver_places_training2 = ["A1", "B1"];
 
-let stage_training2 = new GameState(map_training2,  player_list, loc_list, goal= 2, [],
+let stage_training2 = new GameState(map_training2,  player_list, loc_list, goal= 1, [],
                                     policy = pi_training2, all_locs = all_locs_training2, all_deliver_places = all_deliver_places_training2);
+
+
+let map_training2_2 =     [["#","#","#","#"  ,"#","#","#","#"  ,"#","#","#"],
+["#",".",".","a:1:8",".",".",".","b:2:2",".",".","#"],
+["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+["#",".",".",".","."  ,".",".",".","."  ,".","#"],
+["A1","@:1:1",".","."  ,".",".",".","."  ,".","@:2:2","B1"],
+["#",".",".","."  ,"1",".","2","."  ,".",".","#"],
+["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+["#",".",".",".",".",".",".",".",".",".","#"],
+["#","#","#","#" ,"#","#","#","#" ,"#","#","#"]];
+
+const pi_training2_2 = {
+    "0":["@:2:2","b:2:2","B1","b:2:2","B1"]
+}
+const opt_pi_human_training2_2 = {
+    // "0":["@:1:1","a:1:1","A1","a:1:1","A1"]
+    "0":["@:1:1","a:1:8","A1"]
+}
+const all_locs_training2_2 = ["@:1:1","@:2:2","a:1:8", "b:2:2"];
+const all_deliver_places_training2_2 = ["A1", "B1"];
+
+let stage_training2_2 = new GameState(map_training2_2,  player_list, loc_list, goal= 1, [],
+                                    policy = pi_training2_2, all_locs = all_locs_training2_2, all_deliver_places = all_deliver_places_training2_2);
+
+
+
 
 // let map_training3 =     [["#","#","#","#","#","#","#","#","#","#","#"],
 //                          ["#",".","b:1:1",".",".",".",".",".","a:3:3",".","#"],
@@ -271,6 +300,7 @@ const opt_pi_human_training3 = {
 
 const all_locs_training3 = ["a:1:1", "b:2:2"];
 const all_deliver_places_training3 = ["A1", "B1"];
+
 
 let stage_training3 = new GameState(map_training3, player_list, loc_list, goal= 1, [],
                                     policy = pi_training3, all_locs = all_locs_training3, all_deliver_places = all_deliver_places_training3);
@@ -775,32 +805,52 @@ let stage_testing8 = new GameState(map_testing8, player_list, loc_list, goal= 2,
 //                          ["#","#","#","A1" ,"#","#","#","B1" ,"#","#","#"]];
 
 
-let map_template_1 =     [["#","#","#","#"  ,"#","#","#", "#", "#"],
-                         ["#",".","a:1:1","."  ,".",".","b:2:2",".","#"],    
-                         ["#",".",".","."  ,".",".",".",".","#"],
-                         ["#",".",".","."  ,".",".",".",".","#"], 
-                         ["#",".","1","."  ,".",".","2",".","#"],
-                         ["#",".",".","."  ,".",".",".",".","#"],
-                         ["#",".",".","."  ,".",".",".",".","#"],
-                         ["#",".","@:1:1","."  ,".",".","@:2:2",".","#"],
-                         ["#","#","A1","#"  ,"#","#","B1", "#", "#"]];
+// let map_template_1 =     [["#","#","#","#"  ,"#","#","#", "#", "#"],
+//                          ["#",".","a:1:1","."  ,".",".","b:2:2",".","#"],    
+//                          ["#",".",".","."  ,".",".",".",".","#"],
+//                          ["#",".",".","."  ,".",".",".",".","#"], 
+//                          ["#",".","1","."  ,".",".","2",".","#"],
+//                          ["#",".",".","."  ,".",".",".",".","#"],
+//                          ["#",".",".","."  ,".",".",".",".","#"],
+//                          ["#",".","@:1:1","."  ,".",".","@:2:2",".","#"],
+//                          ["#","#","A1","#"  ,"#","#","B1", "#", "#"]];
 
 
+// const pi_template1 = {
+//     0:[],
+//     0.5:[],
+//     1:[],
+//     F:[]
+// }
+
+// const all_locs_template1 = [];
+// const all_deliver_places_template = [];
+
+// let stage_template1 = new GameState(map_template_1, player_list, loc_list, goal= 1, [],
+//     policy = pi_template1, all_locs = all_locs_template1, all_deliver_places = all_deliver_places_template);
+
+let map_template_1 =     [["#","#","#","#"  ,"#","#","#","#"  ,"#","#","#"],
+                         ["#",".",".","a:1:8",".",".",".","b:2:2",".",".","#"],
+                         ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+                         ["#",".",".",".","."  ,".",".",".","."  ,".","#"],
+                         ["A1","@:1:1",".","."  ,"1",".","2","."  ,".","@:2:2","B1"],
+                         ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+                         ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+                         ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+                         ["#",".",".","."  ,".",".",".","."  ,".",".","#"],
+                         ["#",".",".",".",".",".",".",".",".",".","#"],
+                         ["#","#","#","#" ,"#","#","#","#" ,"#","#","#"]];
 const pi_template1 = {
-    0:[],
-    0.5:[],
-    1:[],
-    F:[]
+    "0":["@:2:2","b:2:2","B1","b:2:2","B1"]
 }
 
-const all_locs_template1 = [];
-const all_deliver_places_template = [];
+
+const all_locs_template1 = ["@:1:1","@:2:2","a:1:8", "b:2:2"];
+const all_deliver_places_template = ["A1", "B1"];
 
 let stage_template1 = new GameState(map_template_1, player_list, loc_list, goal= 1, [],
     policy = pi_template1, all_locs = all_locs_template1, all_deliver_places = all_deliver_places_template);
-
-
-
+ 
 //TODO: function to check that the gameStage and all declaration is valid. 
 //      This includes checking unique id of obj.
 
@@ -812,10 +862,10 @@ let stage_template1 = new GameState(map_template_1, player_list, loc_list, goal=
 //        stage_testing6,stage_testing7, stage_testing8];
 
 const tutorial_stages = [stage_tutorial1, stage_tutorial2];
-const training_stages = [stage_training1, stage_training2, stage_training7, stage_training8];
+const training_stages = [stage_training1, stage_training2, stage_training2_2, stage_training7, stage_training8];
 const testing_stages = [stage_testing1,stage_testing2, stage_testing7, stage_testing8];
 
 let stages = [...tutorial_stages, ...training_stages, ...testing_stages];
  
-// let stages = [stage_training1];
+// let stages = [stage_training2];
  

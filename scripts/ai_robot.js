@@ -14,7 +14,7 @@ const keyToInd = {
 }
 
 // ROBOT LEVEL
-// let robot_bfs_level = 2; // 0,1,2
+// let robot_bfs_level = 1; // 0,1,2
 
 let robot_bfs_level = undefined;
 let input_level = prompt("Enter the robot's level: ");
