@@ -228,12 +228,14 @@ function executeAction(playerID, stage, cmd, guiupdate = true){
 
 function movePlayer(cmd){
    executeAction(playerID.human,curStage,cmd);
+   // nextAction(playerID.human_opt, playerID.robot, curStage);
 
    if (curStage.agents[1] != undefined){
       if(typeof cmd !== "undefined"){
          //move AI
          start_time_robot = performance.now();
-         nextAction(playerID.robot, curStage);
+         // nextAction(playerID.robot, playerID.human_opt, curStage);
+         nextAction(playerID.robot, playerID.human, curStage);
          end_time_robot = performance.now();
          time_taken_robot = end_time_robot - start_time_robot;
          console.log('time_taken_robot: ', time_taken_robot + " ms");

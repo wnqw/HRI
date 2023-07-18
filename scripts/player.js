@@ -1,9 +1,10 @@
 const playerID = {
     human: "1",
-    robot: "2"
+    robot: "2",
+    human_opt: "3"
 }
 
-const playerIDlist = ["1","2"];
+const playerIDlist = ["1","2","3"];
 
 const directions = {
     up: "up",
