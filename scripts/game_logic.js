@@ -77,6 +77,11 @@ function resetPlayers(stage){
       if (currentStage+1 === 9) {stage.agents[i].direction = directions.down;}
       if (currentStage+1 === 10) {stage.agents[i].direction = directions.left;}
 
+      if (currentStage+1 === 11) {stage.agents[i].direction = directions.up;}
+      if (currentStage+1 === 12) {stage.agents[i].direction = directions.right;}
+      if (currentStage+1 === 13) {stage.agents[i].direction = directions.down;}
+      if (currentStage+1 === 14) {stage.agents[i].direction = directions.left;}
+
       stage.agents[i].hold_object = null;
       stage.agents[i].action = actions.notHolding;
       stage.agents[i].loc = findLocation(stage.agents[i].id, stage.map);
