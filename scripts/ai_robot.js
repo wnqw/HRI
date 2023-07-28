@@ -14,7 +14,7 @@ const keyToInd = {
 }
 
 // ROBOT LEVEL
-let robot_bfs_level = 1; // 0,1,2
+let robot_bfs_level = 2; // 0,1,2
 
 // let robot_bfs_level = undefined;
 // let input_level = prompt("Enter the robot's level: ");
@@ -392,11 +392,11 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
 
             // console.log("nearest_target_id_to_other: " + nearest_target_id_to_other);
 
-            if ((check_if_can_interact(nearest_obj_to_other, other_instance)==false && check_if_can_interact(nearest_obj_to_other, player_instance)==true) || other_instance.action_input === actions.wait){
-                let action = find_action_to_loc(gameState, player, nearest_target_loc_to_other);
-                console.log("action case 1: " + action);
-                return [action, nearest_target_loc_to_other];
-            }
+            // if ((check_if_can_interact(nearest_obj_to_other, other_instance)==false && check_if_can_interact(nearest_obj_to_other, player_instance)==true) || other_instance.action === actions.wait){
+            //     let action = find_action_to_loc(gameState, player, nearest_target_loc_to_other);
+            //     console.log("action case 1: " + action);
+            //     return [action, nearest_target_loc_to_other];
+            // }
         }
         
         // if cant help the other player, find nearest obj to do
