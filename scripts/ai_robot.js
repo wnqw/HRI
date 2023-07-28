@@ -101,6 +101,8 @@ function nextAction(playerID, otherID, gameState){
     console.log("robot_curr_action: "+ next_action);
     robot_steps.push(next_action);
     console.log('Robot number of actions: ' + robot_steps.length);
+
+    // console.log('robot_steps: ' + robot_steps);
 }
 
 

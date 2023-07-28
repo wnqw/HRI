@@ -68,19 +68,19 @@ function resetPlayers(stage){
 
    for(let i = 0; i < stage.agents.length;i++){
       stage.agents[i].direction = directions.up;
-      if (currentStage+1 === 4) {stage.agents[i].direction = directions.right;}
-      if (currentStage+1 === 5) {stage.agents[i].direction = directions.down;}
-      if (currentStage+1 === 6) {stage.agents[i].direction = directions.left;}
+      // if (currentStage+1 === 4) {stage.agents[i].direction = directions.right;}
+      // if (currentStage+1 === 5) {stage.agents[i].direction = directions.down;}
+      // if (currentStage+1 === 6) {stage.agents[i].direction = directions.left;}
 
-      if (currentStage+1 === 7) {stage.agents[i].direction = directions.up;}
-      if (currentStage+1 === 8) {stage.agents[i].direction = directions.right;}
-      if (currentStage+1 === 9) {stage.agents[i].direction = directions.down;}
-      if (currentStage+1 === 10) {stage.agents[i].direction = directions.left;}
+      // if (currentStage+1 === 7) {stage.agents[i].direction = directions.up;}
+      // if (currentStage+1 === 8) {stage.agents[i].direction = directions.right;}
+      // if (currentStage+1 === 9) {stage.agents[i].direction = directions.down;}
+      // if (currentStage+1 === 10) {stage.agents[i].direction = directions.left;}
 
-      if (currentStage+1 === 11) {stage.agents[i].direction = directions.up;}
-      if (currentStage+1 === 12) {stage.agents[i].direction = directions.right;}
-      if (currentStage+1 === 13) {stage.agents[i].direction = directions.down;}
-      if (currentStage+1 === 14) {stage.agents[i].direction = directions.left;}
+      // if (currentStage+1 === 11) {stage.agents[i].direction = directions.up;}
+      // if (currentStage+1 === 12) {stage.agents[i].direction = directions.right;}
+      // if (currentStage+1 === 13) {stage.agents[i].direction = directions.down;}
+      // if (currentStage+1 === 14) {stage.agents[i].direction = directions.left;}
 
       stage.agents[i].hold_object = null;
       stage.agents[i].action = actions.notHolding;
@@ -106,8 +106,8 @@ function clearStage(){
    }else{
       //done
       console.log("All games are completed!");
-      // window.alert("You have completed the experiment. Please return to Qualtrics survey tab to complete the survey.")
-      // window.close();
+      window.alert("You have completed the experiment. Please return to Qualtrics survey tab to complete the survey.")
+      window.close();
 
       // completion code
       // initializeSideInfo();  
