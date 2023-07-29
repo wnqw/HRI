@@ -409,14 +409,45 @@ function agent_response_action_dynamic(agentID, otherID, others_action, gameStat
             // console.log("overlap with human goal, old nearest: " + old_nearest + 'next nearest' + nearest_target_id_to_player);
         }
 
-        if ((gameState.map_set===2 || gameState.map_set===3) && robot_bfs_level===1 && nearest_target_id_to_other==='@:1:1'){
+        // if ((gameState.map_set===2 || gameState.map_set===3) && robot_bfs_level===1 && nearest_target_id_to_other==='@:1:1'){
+        //     nearest_target_id_to_player = 'a:1:1';
+        // }
+        // if (gameState.map_set===3 && robot_bfs_level===2){
+        //     nearest_target_id_to_player = '@:1:1';
+        //     flag_m2_l2 = true;
+        // }
+
+        if (gameState.map_set===1 && robot_bfs_level===1){
+            nearest_target_id_to_player = 'b:2:2';
+        }
+        if (gameState.map_set===1 && robot_bfs_level===2 && agentID==='2'){
+            nearest_target_id_to_player = 'b:2:2';
+        }
+        // if (gameState.map_set===1 && robot_bfs_level===2 && agentID==='1'){
+        //     nearest_target_id_to_player = 'a:1:1';
+        // }
+
+        if (gameState.map_set===2 && robot_bfs_level===1){
             nearest_target_id_to_player = 'a:1:1';
         }
-        if (gameState.map_set===3 && robot_bfs_level===2){
+        if (gameState.map_set===2 && robot_bfs_level===2 && agentID==='2'){
+            nearest_target_id_to_player = 'b:2:2';
+        }
+        // if (gameState.map_set===2 && robot_bfs_level===2 && agentID==='1'){
+        //     nearest_target_id_to_player = '@:2:6';
+        // }
+
+        if (gameState.map_set===3 && robot_bfs_level===1){
+            nearest_target_id_to_player = 'a:1:1';
+        }
+        if (gameState.map_set===3 && robot_bfs_level===2 && agentID==='2'){
             nearest_target_id_to_player = '@:1:1';
             flag_m2_l2 = true;
         }
-
+        // if (gameState.map_set===3 && robot_bfs_level===2 && agentID==='1'){
+        //     nearest_target_id_to_player = 'a:1:1';
+        // }
+ 
 
         let nearest_target_loc_to_player = findLocation(nearest_target_id_to_player, gameState.map);
         if (nearest_target_loc_to_player.length === 0) return [];
