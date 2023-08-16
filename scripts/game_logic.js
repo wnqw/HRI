@@ -45,6 +45,10 @@ function initializeSideInfo(){
    // if (currentStage === stages.length){
    //    completionCode.innerHTML = "<b>Completion Code</b>: " + completion_code;
    // }
+
+   let userID = document.querySelector("#username");
+   console.log("User ID: " + userID.value);
+
 }
 
 //Set up the game loop
@@ -121,8 +125,6 @@ function startGame(stages){
    resetPlayers(curStage);
    initializeSideInfo();
    renderTransition();
-   //Initialize the robot.
-   //nextAction("2", curStage);
 
    step();
 }
